@@ -1,0 +1,78 @@
+@import "tailwindcss";
+
+@theme {
+  /* Spacing */
+  --spacing-space-0: 0px;
+  --spacing-space-1: 2px;
+  --spacing-space-2: 4px;
+  --spacing-space-3: 6px;
+  --spacing-space-4: 8px;
+  --spacing-space-5: 12px;
+  --spacing-space-6: 16px;
+  --spacing-space-7: 20px;
+  --spacing-space-8: 24px;
+  --spacing-space-9: 32px;
+  --spacing-space-10: 40px;
+
+  /* Border radius */
+  --radius-none: 0px;
+  --radius-xs: 2px;
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-xl: 12px;
+  --radius-full: 999px;
+
+  /* Primitive colors */
+  --color-neutral-950: #0a0a0b;
+  --color-neutral-900: #17171a;
+  --color-neutral-800: #232326;
+  --color-neutral-700: #2e2e33;
+  --color-neutral-600: #454550;
+  --color-neutral-500: #6b6b76;
+  --color-neutral-400: #91919c;
+  --color-neutral-300: #b4b4bd;
+  --color-accent-600: #00557e;
+  --color-accent-500: #008ad3;
+  --color-accent-400: #a6d2ff;
+  --color-red-700: #6b2623;
+  --color-red-500: #df4746;
+  --color-red-300: #ffb1a9;
+  --color-green-700: #104616;
+  --color-green-500: #27a138;
+  --color-green-300: #8fda92;
+  --color-amber-700: #672f00;
+  --color-amber-500: #e76d00;
+  --color-amber-300: #ffba7c;
+
+  /* Semantic surface colors */
+  --color-surface-app: #0a0a0b;
+  --color-surface-panel: #17171a;
+  --color-surface-panel-elevated: #232326;
+  --color-surface-canvas: #0a0a0b;
+  --color-surface-input: #17171a;
+  --color-surface-hover: #232326;
+  --color-surface-active: #2e2e33;
+
+  /* Semantic text colors */
+  --color-text-primary: #b4b4bd;
+  --color-text-secondary: #91919c;
+  --color-text-muted: #6b6b76;
+  --color-text-disabled: #454550;
+  --color-text-inverse: #0a0a0b;
+
+  /* Semantic border colors */
+  --color-border-subtle: #232326;
+  --color-border-default: #2e2e33;
+  --color-border-strong: #454550;
+  --color-border-focus: #008ad3;
+
+  /* Status colors */
+  --color-status-warning: #e76d00;
+  --color-status-success: #27a138;
+  --color-status-danger: #df4746;
+  --color-status-info: #008ad3;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+body { margin: 0; }
