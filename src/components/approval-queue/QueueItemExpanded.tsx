@@ -1,6 +1,8 @@
 import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
-import { LoaderIcon } from "lucide-react";
+import LoaderIcon from "../../assets/icons/LoaderIcon.svg?react";
+import CheckIcon from "../../assets/icons/CheckIcon.svg?react";
+import DenyIcon from "../../assets/icons/DenyIcon.svg?react";
 import { IconArrowLoopRight } from "@tabler/icons-react";
 import type { NudgeRequest, DecisionStatus, ValidationResult } from "../../types";
 import { StatusOverlay } from "./StatusOverlay";
@@ -193,6 +195,9 @@ export function QueueItemExpanded({
 
   const displayValue = pendingValue ?? request.value;
   const isResolving = status === "resolving";
+  const isSuccessApproved = status === "success-approved";
+  const isSuccessDenied = status === "success-denied";
+  const isSuccess = isSuccessApproved || isSuccessDenied;
   const isResolved = status === "approved" || status === "denied";
   const revealed = !isLoading;
 
@@ -465,7 +470,7 @@ export function QueueItemExpanded({
           ))}
 
           {/* Action buttons */}
-          {!isResolved && !isResolving && (
+          {!isResolved && !isResolving && !isSuccess && (
             <div data-nudge-section="actions" className="mt-space-8 flex items-center gap-space-3">
               {[
                 { action: "approve", label: "Approve", kbd: "A", onClick: onApprove },
@@ -504,8 +509,8 @@ export function QueueItemExpanded({
             </div>
           )}
 
-          {/* Resolving spinner — replaces action buttons while awaiting confirmation */}
-          {isResolving && (
+          {/* Resolving spinner / success check — replaces action buttons while resolving */}
+          {(isResolving || isSuccess) && (
             <motion.div
               data-nudge-section="resolving"
               className="mt-space-8 flex justify-center"
@@ -513,12 +518,33 @@ export function QueueItemExpanded({
               animate={{ opacity: 1 }}
               transition={{ duration: 0.15 }}
             >
-              <LoaderIcon
-                role="status"
-                aria-label="Loading"
-                className="animate-spin text-text-muted"
-                size={16}
-              />
+              <div className="t-icon-swap" data-state={isResolving ? "a" : "b"}>
+                <span className="t-icon" data-icon="a">
+                  <LoaderIcon
+                    role="status"
+                    aria-label="Loading"
+                    className="animate-spin"
+                    width={20}
+                    height={20}
+                    style={{ color: "var(--color-text-muted)" }}
+                  />
+                </span>
+                <span className="t-icon" data-icon="b">
+                  {isSuccessApproved ? (
+                    <CheckIcon
+                      width={20}
+                      height={20}
+                      style={{ color: "var(--color-green-500)" }}
+                    />
+                  ) : (
+                    <DenyIcon
+                      width={20}
+                      height={20}
+                      style={{ color: "var(--color-red-500)" }}
+                    />
+                  )}
+                </span>
+              </div>
             </motion.div>
           )}
 

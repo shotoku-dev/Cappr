@@ -45,15 +45,22 @@ export function ApprovalQueue({
 
   useEffect(() => {
     function onKeyDown(e: KeyboardEvent) {
-      if (e.key !== "ArrowDown" && e.key !== "ArrowUp") return;
       if (e.target instanceof HTMLInputElement) return;
-      e.preventDefault();
-      const idx = items.findIndex((item) => item.id === activeId);
-      const nextIdx = e.key === "ArrowDown"
-        ? Math.min(idx + 1, items.length - 1)
-        : Math.max(idx - 1, 0);
-      const target = items[nextIdx];
-      if (target && target.id !== activeId) handleClick(target.id);
+
+      if (e.key === "ArrowDown" || e.key === "ArrowUp") {
+        e.preventDefault();
+        const idx = items.findIndex((item) => item.id === activeId);
+        const nextIdx = e.key === "ArrowDown"
+          ? Math.min(idx + 1, items.length - 1)
+          : Math.max(idx - 1, 0);
+        const target = items[nextIdx];
+        if (target && target.id !== activeId) handleClick(target.id);
+        return;
+      }
+
+      if (!activeId) return;
+      if (e.key === "a" || e.key === "A") approve(activeId);
+      if (e.key === "d" || e.key === "D") deny(activeId);
     }
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);

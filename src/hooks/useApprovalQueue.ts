@@ -11,7 +11,7 @@ export function useApprovalQueue({
   onApprove,
   onDeny,
   onModify,
-  resolveDelayMs = 750,
+  resolveDelayMs = 1000,
 }: UseApprovalQueueOptions): UseApprovalQueueReturn {
   const [activeId, setActiveId] = useState<string | null>(
     requests[0]?.id ?? null
@@ -44,19 +44,23 @@ export function useApprovalQueue({
       setStatuses((prev) => ({ ...prev, [id]: "resolving" }));
 
       setTimeout(() => {
-        setStatuses((prev) => ({ ...prev, [id]: finalStatus }));
-        setRemovedIds((prev) => {
-          const next = new Set(prev);
-          next.add(id);
-          return next;
-        });
-        setActiveId((currentActive) => {
-          if (currentActive !== id) return currentActive;
-          const remaining = requests.filter(
-            (r) => !removedIds.has(r.id) && r.id !== id
-          );
-          return remaining[0]?.id ?? null;
-        });
+        setStatuses((prev) => ({ ...prev, [id]: finalStatus === "approved" ? "success-approved" : "success-denied" }));
+
+        setTimeout(() => {
+          setStatuses((prev) => ({ ...prev, [id]: finalStatus }));
+          setRemovedIds((prev) => {
+            const next = new Set(prev);
+            next.add(id);
+            return next;
+          });
+          setActiveId((currentActive) => {
+            if (currentActive !== id) return currentActive;
+            const remaining = requests.filter(
+              (r) => !removedIds.has(r.id) && r.id !== id
+            );
+            return remaining[0]?.id ?? null;
+          });
+        }, 650);
       }, resolveDelayMs);
     },
     [requests, removedIds, resolveDelayMs]

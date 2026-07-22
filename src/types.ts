@@ -1,4 +1,4 @@
-export type DecisionStatus = "pending" | "resolving" | "approved" | "denied";
+export type DecisionStatus = "pending" | "resolving" | "success-approved" | "success-denied" | "approved" | "denied";
 
 export interface NudgeRequest {
   id: string;
