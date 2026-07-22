@@ -1,6 +1,5 @@
 import { useState, useCallback } from "react";
 import type {
-  NudgeRequest,
   UseApprovalQueueOptions,
   UseApprovalQueueReturn,
   DecisionStatus,
@@ -41,10 +40,11 @@ export function useApprovalQueue({
   );
 
   const resolveItem = useCallback(
-    (id: string, status: "approved" | "denied") => {
-      setStatuses((prev) => ({ ...prev, [id]: status }));
+    (id: string, finalStatus: "approved" | "denied") => {
+      setStatuses((prev) => ({ ...prev, [id]: "resolving" }));
 
       setTimeout(() => {
+        setStatuses((prev) => ({ ...prev, [id]: finalStatus }));
         setRemovedIds((prev) => {
           const next = new Set(prev);
           next.add(id);

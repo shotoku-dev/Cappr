@@ -1,6 +1,16 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: 'Geist';
+  src: url('../node_modules/geist/dist/fonts/geist-sans/Geist-Variable.woff2') format('woff2');
+  font-weight: 100 900;
+  font-style: normal;
+  font-synthesis: none;
+}
+
 @theme {
+  --font-sans: 'Geist', sans-serif;
+
   /* Spacing */
   --spacing-space-0: 0px;
   --spacing-space-1: 2px;
@@ -23,56 +33,135 @@
   --radius-xl: 12px;
   --radius-full: 999px;
 
-  /* Primitive colors */
-  --color-neutral-950: #0a0a0b;
-  --color-neutral-900: #17171a;
-  --color-neutral-800: #232326;
-  --color-neutral-700: #2e2e33;
-  --color-neutral-600: #454550;
-  --color-neutral-500: #6b6b76;
-  --color-neutral-400: #91919c;
-  --color-neutral-300: #b4b4bd;
-  --color-accent-600: #00557e;
-  --color-accent-500: #008ad3;
-  --color-accent-400: #a6d2ff;
-  --color-red-700: #6b2623;
-  --color-red-500: #df4746;
-  --color-red-300: #ffb1a9;
-  --color-green-700: #104616;
-  --color-green-500: #27a138;
-  --color-green-300: #8fda92;
-  --color-amber-700: #672f00;
-  --color-amber-500: #e76d00;
-  --color-amber-300: #ffba7c;
+  /* Primitive colors — oklch */
+  --color-neutral-950: oklch(0.145 0.002 286.0);
+  --color-neutral-900: oklch(0.206 0.006 285.8);
+  --color-neutral-800: oklch(0.257 0.006 285.9);
+  --color-neutral-700: oklch(0.303 0.009 285.8);
+  --color-neutral-600: oklch(0.395 0.018 285.5);
+  --color-neutral-500: oklch(0.532 0.017 285.7);
+  --color-neutral-400: oklch(0.660 0.016 285.9);
+  --color-neutral-300: oklch(0.773 0.013 286.0);
+  --color-accent-600: oklch(0.428 0.097 239.2);
+  --color-accent-500: oklch(0.609 0.147 243.0);
+  --color-accent-400: oklch(0.848 0.078 249.4);
+  --color-red-700: oklch(0.371 0.099 25.6);
+  --color-red-500: oklch(0.614 0.189 25.0);
+  --color-red-300: oklch(0.833 0.093 25.7);
+  --color-green-700: oklch(0.347 0.095 144.8);
+  --color-green-500: oklch(0.622 0.178 145.0);
+  --color-green-300: oklch(0.821 0.125 145.3);
+  --color-amber-700: oklch(0.375 0.096 52.3);
+  --color-amber-500: oklch(0.670 0.177 50.2);
+  --color-amber-300: oklch(0.840 0.112 62.3);
 
   /* Semantic surface colors */
-  --color-surface-app: #0a0a0b;
-  --color-surface-panel: #17171a;
-  --color-surface-panel-elevated: #232326;
-  --color-surface-canvas: #0a0a0b;
-  --color-surface-input: #17171a;
-  --color-surface-hover: #232326;
-  --color-surface-active: #2e2e33;
+  --color-surface-app: oklch(0.145 0.002 286.0);
+  --color-surface-panel: oklch(0.206 0.006 285.8);
+  --color-surface-panel-elevated: oklch(0.257 0.006 285.9);
+  --color-surface-canvas: oklch(0.145 0.002 286.0);
+  --color-surface-input: oklch(0.206 0.006 285.8);
+  --color-surface-hover: oklch(0.257 0.006 285.9);
+  --color-surface-active: oklch(0.303 0.009 285.8);
 
   /* Semantic text colors */
-  --color-text-primary: #b4b4bd;
-  --color-text-secondary: #91919c;
-  --color-text-muted: #6b6b76;
-  --color-text-disabled: #454550;
-  --color-text-inverse: #0a0a0b;
+  --color-text-primary: oklch(0.773 0.013 286.0);
+  --color-text-secondary: oklch(0.660 0.016 285.9);
+  --color-text-muted: oklch(0.532 0.017 285.7);
+  --color-text-disabled: oklch(0.395 0.018 285.5);
+  --color-text-inverse: oklch(0.145 0.002 286.0);
 
   /* Semantic border colors */
-  --color-border-subtle: #232326;
-  --color-border-default: #2e2e33;
-  --color-border-strong: #454550;
-  --color-border-focus: #008ad3;
+  --color-border-subtle: oklch(0.257 0.006 285.9);
+  --color-border-default: oklch(0.303 0.009 285.8);
+  --color-border-strong: oklch(0.395 0.018 285.5);
+  --color-border-focus: oklch(0.609 0.147 243.0);
 
   /* Status colors */
-  --color-status-warning: #e76d00;
-  --color-status-success: #27a138;
-  --color-status-danger: #df4746;
-  --color-status-info: #008ad3;
+  --color-status-warning: oklch(0.670 0.177 50.2);
+  --color-status-success: oklch(0.622 0.178 145.0);
+  --color-status-danger: oklch(0.614 0.189 25.0);
+  --color-status-info: oklch(0.609 0.147 243.0);
+}
+
+/* transitions-dev — motion tokens */
+:root {
+  --resize-dur: 380ms;
+  --resize-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --pulse-dur: 1000ms;
+  --pulse-count: infinite;
+  --pulse-min: 0.45;
+  --reveal-dur: 400ms;
+  --reveal-blur: 2px;
+  --reveal-ease: ease-in-out;
+}
+
+/* Card resize (transitions-dev) */
+.t-resize {
+  transition:
+    width  var(--resize-dur) var(--resize-ease),
+    height var(--resize-dur) var(--resize-ease);
+  will-change: width, height;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .t-resize { transition: none !important; }
+}
+
+/* Skeleton loader + reveal (transitions-dev 14, layout-preserving variant)
+   Content stays in normal flow so it defines the container height.
+   Skeleton overlays it absolutely. */
+.t-skel { position: relative; }
+
+.t-skel-skeleton {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  opacity: 1;
+  filter: blur(0);
+  transition:
+    opacity var(--reveal-dur) var(--reveal-ease),
+    filter  var(--reveal-dur) var(--reveal-ease);
+}
+/* content stays in flow — drives the container's height */
+.t-skel-content {
+  position: relative;
+  z-index: 2;
+  opacity: 0;
+  filter: blur(var(--reveal-blur));
+  transition:
+    opacity var(--reveal-dur) var(--reveal-ease),
+    filter  var(--reveal-dur) var(--reveal-ease);
+}
+.t-skel.is-revealed .t-skel-skeleton { opacity: 0; filter: blur(var(--reveal-blur)); }
+.t-skel.is-revealed .t-skel-content  { opacity: 1; filter: blur(0); }
+.t-skel.is-resetting .t-skel-skeleton,
+.t-skel.is-resetting .t-skel-content  { transition: none !important; }
+.t-skel-skeleton.is-pulsing > * {
+  animation: t-skel-pulse var(--pulse-dur) ease-in-out var(--pulse-count);
+}
+@keyframes t-skel-pulse {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: var(--pulse-min); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .t-skel-skeleton, .t-skel-content { transition: none !important; }
+  .t-skel-skeleton.is-pulsing > *   { animation: none !important; }
+}
+
+/* Skeleton bar primitive */
+.skel-bar {
+  border-radius: 4px;
+  background: var(--color-surface-hover);
 }
 
 *, *::before, *::after { box-sizing: border-box; }
-body { margin: 0; }
+html, body {
+  margin: 0;
+  background: oklch(0.205 0.000 0);
+  font-family: 'Geist', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}

@@ -1,4 +1,4 @@
-export type DecisionStatus = "pending" | "approved" | "denied";
+export type DecisionStatus = "pending" | "resolving" | "approved" | "denied";
 
 export interface NudgeRequest {
   id: string;
@@ -6,6 +6,7 @@ export interface NudgeRequest {
   summary: string;
   detail?: string;
   value?: number;
+  valuePrefix?: string;
   constraint?: {
     label: string;
     limit: number;
@@ -28,7 +29,7 @@ export type ValidationResult =
 export interface UseApprovalQueueReturn {
   items: NudgeRequest[];
   activeId: string | null;
-  setActiveId: (id: string) => void;
+  setActiveId: (id: string | null) => void;
   statuses: Record<string, DecisionStatus>;
   pendingValue: Record<string, number>;
   setPendingValue: (id: string, value: number) => void;

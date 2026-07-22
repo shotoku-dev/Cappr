@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ApprovalQueue } from "./components/approval-queue";
 import type { NudgeRequest } from "./types";
 
@@ -33,45 +33,55 @@ const agentSpendRequests: NudgeRequest[] = [
   {
     id: "spend-1",
     requester: "ops-agent",
-    summary: "€49.99 to AWS EMEA — Reserved Instance",
-    detail:
-      "Purchasing a 1-year reserved t3.medium for the staging environment. Projected savings vs on-demand: 38%.",
+    summary: "to AWS EMEA",
+    detail: "Compute overage for the eu-west-1 batch cluster",
     value: 49.99,
+    valuePrefix: "€",
     constraint: { label: "max_per_tx", limit: 30 },
-    requestedAt: new Date(Date.now() - 1000 * 60 * 2).toISOString(),
+    requestedAt: new Date(Date.now() - 24000).toISOString(),
   },
   {
     id: "spend-2",
-    requester: "ops-agent",
-    summary: "€12.00 to Datadog — Log retention extension",
-    detail: "Extending log retention from 7 to 30 days for compliance audit.",
-    value: 12,
+    requester: "billing-agent",
+    summary: "to Figma",
+    detail: "Annual seat renewal for the design team workspace",
+    value: 89.00,
+    valuePrefix: "€",
     constraint: { label: "max_per_tx", limit: 30 },
-    requestedAt: new Date(Date.now() - 1000 * 60 * 8).toISOString(),
+    requestedAt: new Date(Date.now() - 60000).toISOString(),
   },
   {
     id: "spend-3",
-    requester: "infra-agent",
-    summary: "€8.50 to Cloudflare — Additional WAF rules",
-    value: 8.5,
+    requester: "coding-agent",
+    summary: "to Anthropic",
+    detail: "API usage overage for the claude-sonnet-4-6 batch jobs",
+    value: 25.79,
+    valuePrefix: "€",
     constraint: { label: "max_per_tx", limit: 30 },
-    requestedAt: new Date(Date.now() - 1000 * 60 * 15).toISOString(),
+    requestedAt: new Date(Date.now() - 120000).toISOString(),
   },
 ];
 
 type Page = "generic" | "agent-spend";
 
 export default function App() {
-  const [page, setPage] = useState<Page>("generic");
+  const [page, setPage] = useState<Page>("agent-spend");
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const t = setTimeout(() => setIsLoading(false), 500);
+    return () => clearTimeout(t);
+  }, []);
 
   return (
-    <div>
+    <div className="min-h-screen flex items-center justify-center">
       <div onClick={() => setPage("generic")} />
       <div onClick={() => setPage("agent-spend")} />
 
       <ApprovalQueue
         key={page}
         requests={page === "generic" ? genericRequests : agentSpendRequests}
+        isLoading={isLoading}
         onApprove={(id, value) => console.log("approved", id, value)}
         onDeny={(id) => console.log("denied", id)}
         onModify={(id, val) => console.log("modified", id, val)}

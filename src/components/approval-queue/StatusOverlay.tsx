@@ -5,6 +5,6 @@ interface Props {
 }
 
 export function StatusOverlay({ status }: Props) {
-  if (status === "pending") return null;
+  if (status === "pending" || status === "resolving") return null;
   return <div data-nudge-overlay="status" data-status={status} />;
 }
