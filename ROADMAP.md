@@ -85,6 +85,64 @@ components preserved from the old library are noted.
 Newest first. One entry per build/fix.
 
 ### 2026-08-26
+- **Overview → Month to Date card.** First Overview card in
+  `client/src/app/overview/` (`Overview.tsx` module host + `MonthToDateCard.tsx`,
+  barrel `index.ts`); mounted in `App` when Overview is active. Elevated surface
+  (`surface-panel-elevated`, 8 radius, 16 padding), sized to its content
+  (`alignSelf: flex-start`) so it reads as a card, not a full-width band. Card
+  body is `surface-panel`; a small Calendar glyph (16px, text-disabled, stroke →
+  currentColor) sits in a lighter `surface-panel-elevated` tab (6 padding) notched
+  flush into the top-left corner (outer corner shares the card's 8 radius, inner
+  corner rounded 8); then — indented 24 and dropped below the tab — the month's spend `€5,547.30` (32px,
+  medium, text-secondary) with `of €7,470.00 fleet budget` (13px, text-muted)
+  trailing on the same baseline. Under the headline, two nested metrics each hang
+  off a text-disabled Indent (subdirectory) arrow: `5,214 transactions` and
+  `€231.14/day avg` (13px, text-muted). Below that, `SpendSparkline.tsx` — a
+  gridless, dependency-free inline-SVG sparkline of cumulative spend vs. a
+  constant-pace budget: solid accent line for actual spend (day 1 → today, day
+  26), a dotted accent projection from today to month-end at the current daily
+  avg, and a subtle text-disabled diagonal for the constant-pace budget (0 → full
+  budget). Normalized viewBox stretched via `preserveAspectRatio="none"` with
+  `non-scaling-stroke` so lines stay crisp at any width. A small top-left legend
+  labels the two reference lines (solid swatch → "Budget pace", dotted accent
+  swatch → "Projected"). On hover the accent marker snaps to the nearest day and
+  glides there (resting on today when idle); a bottom-right readout shows the
+  inspected date + cumulative spend (e.g. `Aug 12 2026 - €2,340.00`). Hovering
+  right of the "Actual" dot inspects the projection — the marker rides the dotted
+  line and the readout appends `· Projected`, which on the final day (Aug 31)
+  becomes `· 95.9% of budget`. Projection lands at €7,165 (95.9% of the €7,470
+  budget).
+- **Topbar breadcrumb.** Added `client/src/app/Topbar.tsx`: a surface-panel bar
+  beside the sidebar (8 radius — optically matches the tall rail; 4 padding, 8 left). Renders a
+  breadcrumb — org switcher (`OrganizationSwitcher.tsx`: `Acme Labs` + chevron
+  that opens a popup with the selected org (overlapping member-avatar stack) and a
+  "+ New organization" action, a dotted divider, then a "Members" roster listing
+  each member with avatar + role tag (Owner/Approver/Viewer) and a muted footnote
+  about Inbox permissions; the current user's avatar gets a dotted ring like the
+  topbar, the chevron lightens on hover, and the popup left-aligns to the chevron
+  via measured offset and sits below the topbar with margin) → Arrow Right (muted) →
+  current module label + its sidebar icon (16px, hugging the label). The
+  current segment reads from `NAV_ITEMS` by `activeId`, so it tracks selection
+  from the single nav source. Right cluster holds the command palette, an active
+  shadow-agent pill (elevated surface, 20 radius, Shadow icon + "Shadow:
+  atlas-researcher", text-secondary, wrapped in a subtle `border-beam` accent
+  glow — `ocean` variant, `strength 0.5`), a round elevated stop button (red
+  Cross icon), and a dotted-ring blue-accent user avatar ("J"). The palette
+  (`app/command-menu/`, `cmdk`) is an elevated trigger button (6 radius, Search icon,
+  "Search or jump to…" label, ⌘/K keycaps) that — along with a global ⌘K/Ctrl+K
+  shortcut — opens a `cmdk` dialog. `CommandPalette.tsx` renders the shell
+  (input, list, footer); the list shows every module (from `NAV_ITEMS`) as a
+  standalone, keyboard-navigable item; selecting one calls `onNavigate` (threaded
+  App → Topbar → CommandMenu) to jump to that module and close the palette. Styled
+  from tokens in `command-menu.css`, dividers dropped for a flat look. A footer shows keyboard hints (↑↓ Navigate · ⏎ Submit · esc Exit)
+  using a shared `Kbd` keycap reused by the trigger button; the footer sits on an
+  elevated surface so it reads apart from the list without a rule. The trigger's
+  keycaps light up live while their key is held (⌘/Ctrl and K tracked on
+  keydown/keyup, reset on blur) via a `Kbd active` state that brightens the cap
+  text only (surface stays put). Sidebar rail icons set to 18px with a tighter
+  8px gap between them, plus Shift+1…N shortcuts (matched on `code`/Digit so a
+  shifted "!" still counts) that jump straight to the Nth module. `App` lays out sidebar + a flex
+  content column (topbar on top), concentric 6 gaps throughout.
 - **Sidebar hover animation.** The highlight pill now follows the hovered tab
   (Framer `layoutId` spring) and returns to the active tab when the pointer
   leaves the rail; clicking a tab makes it active. Icon color is decoupled from

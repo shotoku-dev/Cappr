@@ -1,0 +1,91 @@
+/* Command palette (cmdk) — styled from semantic tokens, dark/light aware. */
+
+.command-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  background: oklch(0 0 0 / 0.5);
+  backdrop-filter: blur(2px);
+}
+
+.command-dialog {
+  position: fixed;
+  top: 18vh;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 51;
+  width: min(640px, calc(100vw - 2 * var(--spacing-space-6)));
+  overflow: hidden;
+  background: var(--color-surface-panel);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-xl); /* 12 */
+  box-shadow: 0 16px 48px oklch(0 0 0 / 0.4);
+  font-family: "Geist", sans-serif;
+}
+
+.command-input {
+  width: 100%;
+  padding: var(--spacing-space-6); /* 16 */
+  border: none;
+  outline: none;
+  background: transparent;
+  color: var(--color-text-primary);
+  font-family: inherit;
+  font-size: 15px;
+}
+.command-input::placeholder {
+  color: var(--color-text-muted);
+}
+
+.command-list {
+  max-height: 320px;
+  overflow-y: auto;
+  padding: var(--spacing-space-3); /* 6 */
+}
+
+.command-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 120px;
+  color: var(--color-text-muted);
+  font-size: 14px;
+}
+
+/* Standalone module items — cmdk drives selection via [data-selected]. */
+.command-item {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-space-3); /* 6 */
+  padding: var(--spacing-space-3) var(--spacing-space-4); /* 6 / 8 */
+  border-radius: var(--radius-md); /* 6 */
+  color: var(--color-text-secondary);
+  font-size: 14px;
+  cursor: pointer;
+  user-select: none;
+}
+.command-item[data-selected="true"] {
+  background: var(--color-surface-panel-elevated);
+  color: var(--color-text-primary);
+}
+
+/* Footer keyboard hints. Elevated surface separates it from the list without a
+   divider; the keycaps drop back to surface-panel (see Kbd). */
+.command-footer {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-space-6); /* 16 between hint groups */
+  padding: var(--spacing-space-3) var(--spacing-space-4); /* 6 / 8 */
+  background: var(--color-surface-panel-elevated);
+}
+
+.command-hint {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-space-2); /* 4 */
+}
+
+.command-hint-label {
+  color: var(--color-text-muted);
+  font-size: 12px;
+}

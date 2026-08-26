@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { NAV_ITEMS, type ModuleId } from "./navigation";
 
@@ -8,10 +8,35 @@ interface SidebarProps {
   onSelect: (id: ModuleId) => void;
 }
 
-const ICON_SIZE = 24;
+const ICON_SIZE = 18;
 
 export function Sidebar({ activeId, onSelect }: SidebarProps) {
   const [hoveredId, setHoveredId] = useState<ModuleId | null>(null);
+
+  // Shift+1…N jumps straight to the Nth module. Use `code` (Digit1…) so it works
+  // regardless of the shifted character the layout produces (e.g. "!").
+  useEffect(() => {
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (!e.shiftKey) return;
+      const target = e.target as HTMLElement | null;
+      if (
+        target &&
+        (target.tagName === "INPUT" ||
+          target.tagName === "TEXTAREA" ||
+          target.isContentEditable)
+      ) {
+        return; // don't hijack typing
+      }
+      const match = /^Digit([1-9])$/.exec(e.code);
+      if (!match) return;
+      const item = NAV_ITEMS[Number(match[1]) - 1];
+      if (!item) return;
+      e.preventDefault();
+      onSelect(item.id);
+    };
+    document.addEventListener("keydown", onKeyDown);
+    return () => document.removeEventListener("keydown", onKeyDown);
+  }, [onSelect]);
 
   return (
     <aside
@@ -21,7 +46,7 @@ export function Sidebar({ activeId, onSelect }: SidebarProps) {
       style={{
         borderRadius: "var(--radius-xl)", // 12 — concentric: 6 padding + 6 item radius
         padding: "var(--spacing-space-3)", // 6 t/b, l/r (the concentric gap)
-        gap: "var(--spacing-space-5)", // 12 between icons
+        gap: "var(--spacing-space-4)", // 8 between icons
       }}
     >
       {NAV_ITEMS.map(({ id, label, Icon }) => {
