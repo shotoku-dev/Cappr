@@ -193,7 +193,7 @@
 *, *::before, *::after { box-sizing: border-box; }
 html, body {
   margin: 0;
-  background: var(--color-surface-canvas);
+  background: var(--color-surface-app);
   font-family: 'Geist', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
