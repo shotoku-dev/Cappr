@@ -1,10 +1,10 @@
 import { useRef, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useApprovalQueue } from "../../hooks/useApprovalQueue";
-import type { UseApprovalQueueOptions } from "../../types";
+import type { UseApprovalQueueOptions, Meter } from "@nudge/shared";
 import { QueueItemExpanded } from "./QueueItemExpanded";
 
-type Props = UseApprovalQueueOptions & { isLoading?: boolean };
+type Props = UseApprovalQueueOptions & { isLoading?: boolean; meter?: Meter; isActive?: boolean };
 
 export function ApprovalQueue({
   requests,
@@ -13,6 +13,8 @@ export function ApprovalQueue({
   onModify,
   resolveDelayMs,
   isLoading = false,
+  meter,
+  isActive = true,
 }: Props) {
   const {
     items,
@@ -45,6 +47,7 @@ export function ApprovalQueue({
 
   useEffect(() => {
     function onKeyDown(e: KeyboardEvent) {
+      if (!isActive) return;
       if (e.target instanceof HTMLInputElement) return;
 
       if (e.key === "ArrowDown" || e.key === "ArrowUp") {
@@ -64,7 +67,7 @@ export function ApprovalQueue({
     }
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
-  }, [items, activeId]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [items, activeId, isActive]); // eslint-disable-line react-hooks/exhaustive-deps
 
   function handleCollapseComplete() {
     if (pendingIdRef.current !== null) {
@@ -88,6 +91,7 @@ export function ApprovalQueue({
               isActive={item.id === activeId}
               status={statuses[item.id] ?? "pending"}
               isLoading={isLoading}
+              meter={meter}
               pendingValue={pendingValue[item.id]}
               onClick={() => handleClick(item.id)}
               onCollapseComplete={handleCollapseComplete}

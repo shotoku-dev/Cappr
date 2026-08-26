@@ -1,4 +1,4 @@
-import type { DecisionStatus } from "../../types";
+import type { DecisionStatus } from "@nudge/shared";
 
 interface Props {
   status: DecisionStatus;

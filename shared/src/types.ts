@@ -1,5 +1,11 @@
 export type DecisionStatus = "pending" | "resolving" | "success-approved" | "success-denied" | "approved" | "denied";
 
+export interface Meter {
+  value: number;
+  limit: number;
+  prefix?: string;
+}
+
 export interface NudgeRequest {
   id: string;
   requester: string;
@@ -25,6 +31,28 @@ export interface UseApprovalQueueOptions {
 export type ValidationResult =
   | { valid: true }
   | { valid: false; reason: string };
+
+export interface AuditEntry {
+  request: NudgeRequest;
+  status: "approved" | "denied";
+  resolvedAt: string;
+  resolvedValue?: number;
+  hash?: string;
+}
+
+export interface AgentPolicy {
+  agent: string;
+  autoApproveBelow: number;
+  requireApprovalAbove: number;
+  autoApproveEnabled: boolean;
+  auditLocked: boolean;
+}
+
+export interface Policy {
+  budgetLimit: number;
+  budgetPrefix: string;
+  agents: AgentPolicy[];
+}
 
 export interface UseApprovalQueueReturn {
   items: NudgeRequest[];

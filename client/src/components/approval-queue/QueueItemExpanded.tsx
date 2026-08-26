@@ -4,7 +4,7 @@ import LoaderIcon from "../../assets/icons/LoaderIcon.svg?react";
 import CheckIcon from "../../assets/icons/CheckIcon.svg?react";
 import DenyIcon from "../../assets/icons/DenyIcon.svg?react";
 import { IconArrowLoopRight } from "@tabler/icons-react";
-import type { NudgeRequest, DecisionStatus, ValidationResult } from "../../types";
+import type { NudgeRequest, DecisionStatus, ValidationResult, Meter } from "@nudge/shared";
 import { StatusOverlay } from "./StatusOverlay";
 
 // Collapsed pill height; the collapsed overlay is absolutely positioned and
@@ -18,6 +18,7 @@ interface Props {
   status: DecisionStatus;
   isLoading: boolean;
   isActive: boolean;
+  meter?: Meter;
   onClick: () => void;
   onCollapseComplete: () => void;
   pendingValue?: number;
@@ -25,6 +26,18 @@ interface Props {
   onDeny: () => void;
   onModify: (newValue: number) => ValidationResult;
   onPendingValueChange: (value: number) => void;
+}
+
+function fmt(value: number): string {
+  return value.toFixed(2);
+}
+
+// Step the value font down as the amount gets longer so large checks
+// (10k, 100k…) still fit the fixed 300px card next to the summary text.
+function valueFontPx(totalChars: number): number {
+  if (totalChars <= 8) return 40;
+  if (totalChars <= 10) return 32;
+  return 26;
 }
 
 function relativeTime(iso: string): string {
@@ -71,6 +84,7 @@ export function QueueItemExpanded({
   status,
   isLoading,
   isActive,
+  meter,
   onClick,
   onCollapseComplete,
   pendingValue,
@@ -90,14 +104,25 @@ export function QueueItemExpanded({
   const [pendingCollapse, setPendingCollapse] = useState(false);
   // Tracks isActive across renders so transitions can be derived during render (not in an effect).
   const [prevActive, setPrevActive] = useState(isActive);
+  const initialNum = pendingValue ?? request.value;
   const [inputValue, setInputValue] = useState(
-    String(pendingValue ?? request.value ?? "")
+    initialNum !== undefined ? fmt(initialNum) : ""
   );
   const [validationError, setValidationError] = useState<string | null>(null);
 
   const cardDoneRef = useRef(false);
   const isCollapsingRef = useRef(false);
   const prevIsActiveRef = useRef(isActive);
+  // True only for the item that mounts already-active (page load); all subsequent
+  // activations are click-driven and get a shorter constraint reveal delay.
+  const mountedAsActiveRef = useRef(isActive);
+  const hasBeenActivatedRef = useRef(false);
+
+  const isResolving = status === "resolving";
+  const isSuccessApproved = status === "success-approved";
+  const isSuccessDenied = status === "success-denied";
+  const isSuccess = isSuccessApproved || isSuccessDenied;
+  const isResolved = status === "approved" || status === "denied";
 
   // Derived: card is at rest in its collapsed state (not animating)
   const isIdleCollapsed = !isActive && !isCollapsing && !pendingCollapse;
@@ -120,17 +145,36 @@ export function QueueItemExpanded({
     return () => clearTimeout(t);
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
+  // Reset edit state only when the item itself changes. Depending on
+  // pendingValue here kicked the user out of edit mode on every valid
+  // keystroke, since typing updates pendingValue through the parent.
   useEffect(() => {
-    setInputValue(String(pendingValue ?? request.value ?? ""));
+    const v = pendingValue ?? request.value;
+    setInputValue(v !== undefined ? fmt(v) : "");
     setValidationError(null);
     setEditMode(false);
-  }, [request.id, pendingValue, request.value]);
+  }, [request.id]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     if (!cardDone || isLoading || !isActive) return;
-    const t = setTimeout(() => setShowConstraint(true), 500);
+    const isPageLoad = mountedAsActiveRef.current && !hasBeenActivatedRef.current;
+    hasBeenActivatedRef.current = true;
+    const t = setTimeout(() => setShowConstraint(true), isPageLoad ? 500 : 80);
     return () => clearTimeout(t);
   }, [cardDone, isLoading, isActive]);
+
+  useEffect(() => {
+    if (!isActive || isResolved || isResolving || isSuccess) return;
+    function onKeyDown(e: KeyboardEvent) {
+      if (e.target instanceof HTMLInputElement) return;
+      if (e.key === "m" || e.key === "M") {
+        e.preventDefault();
+        setEditMode((v) => !v);
+      }
+    }
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [isActive, isResolved, isResolving, isSuccess]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Drive expand/collapse phase flags synchronously during render (React's
   // derived-state pattern: setState during render re-renders before paint).
@@ -147,15 +191,12 @@ export function QueueItemExpanded({
       setPendingCollapse(false);
       setCardDone(false);
       cardDoneRef.current = false;
-      // Click-driven expands mirror collapse: the constraint is part of the card from
-      // the start so the card grows once to its full height. The staged constraint
-      // reveal only happens on the initial load flourish.
-      setShowConstraint(true);
-      setConstraintDone(true);
+      setShowConstraint(false);
+      setConstraintDone(false);
     } else {
       // true → false: collapse (bar first if showing, then card)
       setPendingCollapse(true);
-      const barWasShowing = constraintDone && !isExpanding;
+      const barWasShowing = constraintDone && !isExpanding && !!meter;
       if (!barWasShowing && !isCollapsingRef.current) {
         isCollapsingRef.current = true;
         setIsCollapsing(true);
@@ -194,14 +235,33 @@ export function QueueItemExpanded({
   }, [isCollapsing]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const displayValue = pendingValue ?? request.value;
-  const isResolving = status === "resolving";
-  const isSuccessApproved = status === "success-approved";
-  const isSuccessDenied = status === "success-denied";
-  const isSuccess = isSuccessApproved || isSuccessDenied;
-  const isResolved = status === "approved" || status === "denied";
   const revealed = !isLoading;
+  const displayText = displayValue !== undefined ? fmt(displayValue) : "";
+
+  // Sync the input text to the displayed value when edit mode turns on, so the
+  // span → input swap shows identical text (same derived-state-during-render
+  // pattern as the expand/collapse flags above).
+  const [prevEditMode, setPrevEditMode] = useState(editMode);
+  if (editMode !== prevEditMode) {
+    setPrevEditMode(editMode);
+    if (editMode) {
+      setInputValue(displayText);
+      setValidationError(null);
+    }
+  }
+
+  // Size from whichever is longer: what's typed, or what it will format to on
+  // commit — so the font doesn't jump when "10000" becomes "10000.00" on blur.
+  const parsedInput = parseFloat(inputValue);
+  const valueChars =
+    (request.valuePrefix?.length ?? 0) +
+    (editMode
+      ? Math.max(inputValue.length, isNaN(parsedInput) ? 0 : fmt(parsedInput).length)
+      : displayText.length);
+  const valueFontSize = valueFontPx(valueChars);
 
   function handleInputChange(raw: string) {
+    if (raw !== "" && !/^-?\d*\.?\d*$/.test(raw)) return;
     setInputValue(raw);
     const num = parseFloat(raw);
     if (isNaN(num)) {
@@ -230,32 +290,14 @@ export function QueueItemExpanded({
       <div data-nudge-field="constraint" className="flex items-center justify-between pl-space-6">
         <div className="flex items-center gap-space-2">
           <IconArrowLoopRight size={14} className="text-text-muted" style={{ transform: "scaleY(-1)" }} />
-          <span className="text-sm text-text-secondary">Policy</span>
+          <span className="text-sm text-text-secondary">Constraint</span>
         </div>
         <span
           data-nudge-field="constraint-label"
           className="text-xs font-normal text-status-warning tabular-nums"
         >
-          {request.constraint.label}: {request.valuePrefix}{request.constraint.limit}
+          {request.constraint.label}: {request.valuePrefix}{fmt(request.constraint.limit)}
         </span>
-      </div>
-
-      <div className="flex items-center justify-between pl-space-6">
-        <div className="flex items-center gap-space-2">
-          <IconArrowLoopRight size={14} className="text-text-muted" style={{ transform: "scaleY(-1)" }} />
-          <span className="text-sm text-text-secondary">Payment rail</span>
-        </div>
-        <div className="flex items-center gap-space-2">
-          <div
-            style={{
-              width: "18px",
-              height: "11px",
-              borderRadius: "1.48px",
-              backgroundColor: "var(--color-text-muted)",
-            }}
-          />
-          <span className="text-xs text-text-disabled tabular-nums">•• 4102</span>
-        </div>
       </div>
     </div>
   );
@@ -265,7 +307,7 @@ export function QueueItemExpanded({
       {/* Progress bar collapses first on close; its onAnimationComplete triggers card resize */}
       <motion.div
         style={{ width: "85%", overflow: "hidden" }}
-        animate={{ height: (isCollapsing || !isActive || !constraintDone || isExpanding) ? 0 : "auto" }}
+        animate={{ height: (isCollapsing || !isActive || !constraintDone || isExpanding || !meter) ? 0 : "auto" }}
         transition={(isCollapsing || !isActive || !constraintDone || isExpanding) ? closeSpring : openSpring}
         onAnimationComplete={() => {
           // Fires after bar animates to 0 when collapsing — now start card collapse
@@ -275,27 +317,44 @@ export function QueueItemExpanded({
           }
         }}
       >
-        <motion.div
-          className="bg-surface-app"
-          style={{ borderRadius: "12px 12px 0 0", padding: "8px", marginBottom: "-0.5px" }}
-          initial={{ y: "100%" }}
-          animate={{ y: (pendingCollapse || (constraintDone && isActive && !isExpanding)) ? 0 : "100%" }}
-          transition={
-            (constraintDone && isActive && !isExpanding && !pendingCollapse)
-              ? { type: "spring", duration: 0.8, bounce: 0.15 }
-              : { type: "spring", duration: 0.35, bounce: 0 }
-          }
-        >
-          <div
-            className="relative bg-surface-input flex items-center px-space-3"
-            style={{ borderRadius: "6px", height: "18px" }}
-          >
-            <div className="absolute inset-y-0 left-0 bg-accent-500" style={{ width: "70%", borderRadius: "6px" }} />
-            <span className="relative ml-auto text-[10px] font-medium tabular-nums text-text-muted leading-none">
-              €<span className="text-text-secondary">756</span>/1000
-            </span>
-          </div>
-        </motion.div>
+        {meter && (() => {
+          const fillPct = Math.min(meter.value / meter.limit, 1) * 100;
+          const emptyPct = 100 - fillPct;
+          const prefix = meter.prefix ?? "";
+          const label = `${prefix}${fmt(meter.value)}/${fmt(meter.limit)}`;
+          return (
+            <motion.div
+              className="bg-surface-app"
+              style={{ borderRadius: "12px 12px 0 0", padding: "8px", marginBottom: "-0.5px" }}
+              initial={{ y: "100%" }}
+              animate={{ y: (pendingCollapse || (constraintDone && isActive && !isExpanding)) ? 0 : "100%" }}
+              transition={
+                (constraintDone && isActive && !isExpanding && !pendingCollapse)
+                  ? { type: "spring", duration: 0.8, bounce: 0.15 }
+                  : { type: "spring", duration: 0.35, bounce: 0 }
+              }
+            >
+              <div
+                className="relative bg-surface-input flex items-center px-space-3"
+                style={{ borderRadius: "6px", height: "18px" }}
+              >
+                <div className="absolute inset-y-0 left-0 bg-accent-500" style={{ width: `${fillPct}%`, borderRadius: "6px" }} />
+                {/* Base label — muted, visible where fill doesn't cover */}
+                <span className="relative ml-auto text-[10px] font-medium tabular-nums text-text-muted leading-none pointer-events-none">
+                  {prefix}<span className="text-text-secondary">{fmt(meter.value)}</span>/{fmt(meter.limit)}
+                </span>
+                {/* Same label in white, clipped to the filled region for contrast */}
+                <div className="absolute inset-0 overflow-hidden pointer-events-none" style={{ right: `${emptyPct}%` }}>
+                  <div className="absolute inset-0 flex items-center px-space-3" style={{ width: `${(100 / fillPct) * 100}%` }}>
+                    <span className="ml-auto text-[10px] font-medium tabular-nums leading-none" style={{ color: "white" }}>
+                      {label}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          );
+        })()}
       </motion.div>
 
       {/* Unified card — animates between collapsed and expanded states in place.
@@ -344,15 +403,15 @@ export function QueueItemExpanded({
           transition={
             showCollapsedOverlay
               ? { duration: 0.25, delay: 0.15, ease: "easeOut" }
-              : { duration: 0.1, ease: "easeIn" }
+              : { duration: 0 }
           }
         >
-          <span className="text-base font-normal text-text-primary">{request.requester}</span>
-          {displayValue !== undefined && (
-            <span className="text-base font-medium text-text-muted">
-              {request.valuePrefix}{displayValue} {request.summary}
-            </span>
-          )}
+          <span className="text-base font-normal text-text-primary shrink-0">{request.requester}</span>
+          <span className="text-base font-medium text-text-muted truncate ml-3 text-right">
+            {displayValue !== undefined
+              ? `${request.valuePrefix ?? ""}${fmt(displayValue)}`
+              : request.summary}
+          </span>
         </motion.div>
 
         {/* Expanded content — fades out fast when collapsing, fades in after card expands.
@@ -401,40 +460,87 @@ export function QueueItemExpanded({
                   </div>
                 }
               >
-                <div className="flex items-center gap-space-4">
-                  {editMode ? (
-                    <input
-                      autoFocus
-                      type="number"
-                      value={inputValue}
-                      onChange={(e) => handleInputChange(e.target.value)}
-                      onBlur={handleEditCommit}
-                      onKeyDown={(e) => e.key === "Enter" && handleEditCommit()}
-                      data-nudge-field="value"
-                    />
-                  ) : (
+                {/* flex-wrap: worst-case amounts push the summary to its own
+                    line instead of clipping against the card's overflow:hidden */}
+                <div className="flex flex-wrap items-center gap-space-4">
+                  <div className="flex items-center">
                     <span
-                      data-nudge-field="value"
-                      className="text-[40px] font-medium text-text-primary leading-none tabular-nums"
+                      className="font-medium text-text-primary leading-none tabular-nums"
+                      style={{ fontSize: valueFontSize }}
                     >
-                      {request.valuePrefix}{displayValue}
+                      {request.valuePrefix}
                     </span>
-                  )}
+                    {editMode ? (
+                      // Mirror-sized input: a hidden replica of the text sets the
+                      // width, so the input is always exactly as wide as its
+                      // content. ch-based sizing overshot (1ch = digit width, but
+                      // "." is narrower), which shoved the summary on every toggle.
+                      <span
+                        className="font-medium text-text-primary leading-none tabular-nums"
+                        // -1px cancels the replica's caret reserve so the box is
+                        // exactly as wide as the static span it replaces
+                        style={{ display: "inline-grid", fontSize: valueFontSize, marginRight: -1 }}
+                      >
+                        <span
+                          aria-hidden
+                          style={{
+                            gridArea: "1 / 1",
+                            visibility: "hidden",
+                            whiteSpace: "pre",
+                            // reserve room so the end-of-text caret isn't clipped
+                            paddingRight: "1px",
+                          }}
+                        >
+                          {inputValue || "0"}
+                        </span>
+                        <input
+                          autoFocus
+                          type="text"
+                          // size=1 keeps the input's intrinsic width out of the
+                          // grid track sizing — the hidden replica alone sets it
+                          size={1}
+                          inputMode="decimal"
+                          value={inputValue}
+                          onChange={(e) => handleInputChange(e.target.value)}
+                          onBlur={handleEditCommit}
+                          onKeyDown={(e) => e.key === "Enter" && handleEditCommit()}
+                          data-nudge-field="value"
+                          style={{
+                            gridArea: "1 / 1",
+                            width: "100%",
+                            minWidth: 0,
+                            font: "inherit",
+                            color: "inherit",
+                            background: "none",
+                            border: "none",
+                            outline: "none",
+                            padding: 0,
+                            caretColor: "var(--color-accent-500)",
+                          }}
+                        />
+                      </span>
+                    ) : (
+                      <span
+                        data-nudge-field="value"
+                        className="font-medium text-text-primary leading-none tabular-nums"
+                        style={{ fontSize: valueFontSize, cursor: isResolved ? "default" : "text" }}
+                        onClick={() => { if (!isResolved) setEditMode(true); }}
+                      >
+                        {displayText}
+                      </span>
+                    )}
+                  </div>
                   <span data-nudge-field="summary" className="text-base font-medium text-text-secondary">
                     {request.summary}
                   </span>
-                  {!isResolved && (
-                    <div data-nudge-action="edit" onClick={() => setEditMode((v) => !v)} />
-                  )}
                 </div>
+                {validationError && (
+                  <p data-nudge-field="validation-error" className="mt-space-2 text-xs text-status-danger">
+                    {validationError}
+                  </p>
+                )}
               </Skel>
             </div>
-          )}
-
-          {validationError && (
-            <p data-nudge-field="validation-error" className="mt-space-2 text-xs text-status-danger">
-              {validationError}
-            </p>
           )}
 
           {/* Detail */}
