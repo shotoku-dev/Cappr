@@ -18,7 +18,7 @@ export function HeroSection() {
             place.
           </Text>
           <Row cols={2}>
-            <Link to="/app" className="wf-btn wf-btn--primary">
+            <Link to="/dashboard" className="wf-btn wf-btn--primary">
               Start free trial
             </Link>
             <span className="wf-btn">Book a demo</span>

@@ -14,7 +14,7 @@ export function FinalCtaSection() {
             </Text>
             <Text variant="body">See Nudge in action — start free or book a walkthrough.</Text>
             <div style={{ display: "flex", gap: "var(--spacing-space-4)" }}>
-              <Link to="/app" className="wf-btn wf-btn--primary">
+              <Link to="/dashboard" className="wf-btn wf-btn--primary">
                 Start free trial
               </Link>
               <span className="wf-btn">Explore docs</span>

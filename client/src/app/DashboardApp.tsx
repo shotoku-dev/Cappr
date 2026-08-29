@@ -4,7 +4,7 @@ import { Topbar } from "./Topbar";
 import { Overview } from "./overview";
 import type { ModuleId } from "./navigation";
 
-/** Authenticated dashboard shell — mounted at /app. */
+/** Authenticated dashboard shell — mounted at /dashboard. */
 export function DashboardApp() {
   const [activeId, setActiveId] = useState<ModuleId>("overview");
 

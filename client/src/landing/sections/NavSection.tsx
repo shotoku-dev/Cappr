@@ -26,7 +26,7 @@ export function NavSection() {
           <Block label="Auth CTAs">
             <Row cols={2}>
               <span className="wf-btn">Log in</span>
-              <Link to="/app" className="wf-btn wf-btn--primary">
+              <Link to="/dashboard" className="wf-btn wf-btn--primary">
                 Start free trial
               </Link>
             </Row>
