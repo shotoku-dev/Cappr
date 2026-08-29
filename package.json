@@ -8,6 +8,7 @@
     "shared"
   ],
   "scripts": {
+    "predev": "node scripts/ensure-deps.mjs",
     "dev": "npm run dev --workspace @nudge/client",
     "build": "npm run build --workspace @nudge/client",
     "preview": "npm run preview --workspace @nudge/client",
