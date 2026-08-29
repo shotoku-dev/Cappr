@@ -1,0 +1,278 @@
+/* Wireframe landing — structure visualization only */
+
+.wf-landing {
+  min-height: 100dvh;
+  background: var(--color-neutral-950);
+  color: var(--color-neutral-400);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.wf-container {
+  max-width: 1120px;
+  margin-inline: auto;
+  padding-inline: var(--spacing-space-8);
+}
+
+/* ── Section shell ───────────────────────────────────────── */
+
+.wf-section {
+  position: relative;
+  padding-block: var(--spacing-space-10);
+  border-bottom: 1px dashed var(--color-neutral-700);
+}
+
+.wf-section__label {
+  position: absolute;
+  top: var(--spacing-space-4);
+  left: var(--spacing-space-4);
+  padding: var(--spacing-space-1) var(--spacing-space-3);
+  border: 1px solid var(--color-neutral-600);
+  border-radius: var(--radius-sm);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-neutral-500);
+  background: var(--color-neutral-900);
+  z-index: 1;
+}
+
+/* ── Typography placeholders ─────────────────────────────── */
+
+.wf-text {
+  margin: 0;
+  color: var(--color-neutral-300);
+}
+
+.wf-text--eyebrow {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-neutral-500);
+}
+
+.wf-text--h1 {
+  font-size: clamp(28px, 4vw, 44px);
+  font-weight: 600;
+  line-height: 1.1;
+  color: var(--color-neutral-300);
+}
+
+.wf-text--h2 {
+  font-size: clamp(22px, 3vw, 32px);
+  font-weight: 600;
+  line-height: 1.15;
+  color: var(--color-neutral-300);
+}
+
+.wf-text--h3 {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--color-neutral-300);
+}
+
+.wf-text--body {
+  font-size: 15px;
+  color: var(--color-neutral-400);
+  max-width: 56ch;
+}
+
+.wf-text--caption {
+  font-size: 12px;
+  color: var(--color-neutral-500);
+}
+
+/* ── Blocks & layout ─────────────────────────────────────── */
+
+.wf-block {
+  position: relative;
+  border: 1px dashed var(--color-neutral-600);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-space-6);
+  background: color-mix(in oklch, var(--color-neutral-900) 60%, transparent);
+}
+
+.wf-block__label,
+.wf-row__label,
+.wf-col__label {
+  display: block;
+  margin-bottom: var(--spacing-space-4);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--color-neutral-600);
+}
+
+.wf-row {
+  display: grid;
+  gap: var(--spacing-space-6);
+}
+
+.wf-row[data-cols="2"] {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.wf-row[data-cols="3"] {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.wf-row[data-cols="4"] {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.wf-row[data-cols="5"] {
+  grid-template-columns: repeat(5, 1fr);
+}
+
+.wf-row[data-cols="6"] {
+  grid-template-columns: repeat(6, 1fr);
+}
+
+.wf-col {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-space-4);
+}
+
+.wf-stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-space-6);
+}
+
+.wf-stack--tight {
+  gap: var(--spacing-space-4);
+}
+
+.wf-center {
+  text-align: center;
+  align-items: center;
+}
+
+.wf-center .wf-text--body {
+  margin-inline: auto;
+}
+
+/* ── Placeholders ────────────────────────────────────────── */
+
+.wf-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px dashed var(--color-neutral-600);
+  border-radius: var(--radius-lg);
+  background: var(--color-neutral-900);
+  color: var(--color-neutral-600);
+  font-size: 12px;
+  font-weight: 500;
+  text-align: center;
+  padding: var(--spacing-space-6);
+  aspect-ratio: attr(data-aspect);
+  min-height: 120px;
+}
+
+.wf-placeholder[data-aspect="16/9"] {
+  aspect-ratio: 16 / 9;
+}
+
+.wf-placeholder[data-aspect="4/3"] {
+  aspect-ratio: 4 / 3;
+}
+
+.wf-placeholder[data-aspect="1/1"] {
+  aspect-ratio: 1 / 1;
+}
+
+.wf-logo-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-space-4);
+  justify-content: center;
+}
+
+.wf-logo-chip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 96px;
+  height: 40px;
+  padding-inline: var(--spacing-space-4);
+  border: 1px dashed var(--color-neutral-700);
+  border-radius: var(--radius-sm);
+  font-size: 11px;
+  color: var(--color-neutral-600);
+}
+
+.wf-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--spacing-space-2) var(--spacing-space-4);
+  border: 1px dashed var(--color-neutral-600);
+  border-radius: var(--radius-full);
+  font-size: 12px;
+  color: var(--color-neutral-500);
+}
+
+.wf-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-space-3) var(--spacing-space-6);
+  border: 1px dashed var(--color-neutral-500);
+  border-radius: var(--radius-md);
+  font-size: 13px;
+  color: var(--color-neutral-400);
+  background: transparent;
+  cursor: default;
+}
+
+.wf-btn--primary {
+  border-style: solid;
+  border-color: var(--color-neutral-500);
+  color: var(--color-neutral-300);
+}
+
+.wf-tab-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-space-3);
+}
+
+.wf-tab {
+  padding: var(--spacing-space-2) var(--spacing-space-4);
+  border: 1px dashed var(--color-neutral-700);
+  border-radius: var(--radius-sm);
+  font-size: 12px;
+  color: var(--color-neutral-500);
+}
+
+.wf-tab--active {
+  border-color: var(--color-neutral-500);
+  color: var(--color-neutral-300);
+}
+
+.wf-quote {
+  font-size: 15px;
+  font-style: italic;
+  color: var(--color-neutral-400);
+}
+
+.wf-divider {
+  height: 1px;
+  background: var(--color-neutral-800);
+  margin-block: var(--spacing-space-6);
+}
+
+@media (max-width: 768px) {
+  .wf-row[data-cols="2"],
+  .wf-row[data-cols="3"],
+  .wf-row[data-cols="4"],
+  .wf-row[data-cols="5"],
+  .wf-row[data-cols="6"] {
+    grid-template-columns: 1fr;
+  }
+}
