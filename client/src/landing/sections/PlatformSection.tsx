@@ -39,7 +39,7 @@ export function PlatformSection() {
             Govern every agent dollar in one place
           </Text>
           <Text variant="body">
-            You can't control what you can't see. Nudge is the dashboard on top
+            You can't control what you can't see. Cappr is the dashboard on top
             of Shotoku's enforcement gateway — run, monitor, and govern all your
             agents from a single surface.
           </Text>

@@ -1,7 +1,7 @@
 # Landing Page Wireframe Review Report
 **Date:** Saturday, August 29, 2026, 8:58 PM  
 **URL:** http://localhost:5173/  
-**Page:** Nudge Landing Page Wireframe
+**Page:** Cappr Landing Page Wireframe
 
 ## Overview
 Successfully captured the complete landing page wireframe from top to bottom. The page is fully functional with all wireframe labels appearing correctly and positioned appropriately.
@@ -19,7 +19,7 @@ Successfully captured the complete landing page wireframe from top to bottom. Th
 
 ### 1. **NAV** (Navigation)
 - **Sub-components:**
-  - `LOGO`: "Nudge by Shotoku"
+  - `LOGO`: "Cappr by Shotoku"
   - `PRIMARY LINKS`: Product, Docs, Pricing, Open Source, Company
   - `AUTH CTAS`: "Log in" and "Start free trial" buttons
 - **Status:** ✓ Labels appear correctly
@@ -102,7 +102,7 @@ Successfully captured the complete landing page wireframe from top to bottom. Th
 
 ### 12. **FINAL CTA** Section
 - `CLOSING CTA` component
-- Main headline: "Run. Control. Transform with Nudge."
+- Main headline: "Run. Control. Transform with Cappr."
 - CTA buttons: "Start free trial" and "Explore docs"
 - **Status:** ✓ Labels appear correctly
 

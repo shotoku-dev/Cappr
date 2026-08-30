@@ -6,7 +6,7 @@ export interface Meter {
   prefix?: string;
 }
 
-export interface NudgeRequest {
+export interface CapprRequest {
   id: string;
   requester: string;
   summary: string;
@@ -21,7 +21,7 @@ export interface NudgeRequest {
 }
 
 export interface UseApprovalQueueOptions {
-  requests: NudgeRequest[];
+  requests: CapprRequest[];
   onApprove: (id: string, value?: number) => void | Promise<void>;
   onDeny: (id: string) => void | Promise<void>;
   onModify?: (id: string, newValue: number) => void | Promise<void>;
@@ -33,7 +33,7 @@ export type ValidationResult =
   | { valid: false; reason: string };
 
 export interface AuditEntry {
-  request: NudgeRequest;
+  request: CapprRequest;
   status: "approved" | "denied";
   resolvedAt: string;
   resolvedValue?: number;
@@ -55,7 +55,7 @@ export interface Policy {
 }
 
 export interface UseApprovalQueueReturn {
-  items: NudgeRequest[];
+  items: CapprRequest[];
   activeId: string | null;
   setActiveId: (id: string | null) => void;
   statuses: Record<string, DecisionStatus>;

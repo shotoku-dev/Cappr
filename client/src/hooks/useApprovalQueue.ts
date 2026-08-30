@@ -4,7 +4,7 @@ import type {
   UseApprovalQueueReturn,
   DecisionStatus,
   ValidationResult,
-} from "@nudge/shared";
+} from "@cappr/shared";
 
 export function useApprovalQueue({
   requests,

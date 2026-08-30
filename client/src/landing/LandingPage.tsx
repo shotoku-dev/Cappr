@@ -15,7 +15,7 @@ import { TestimonialsSection } from "./sections/TestimonialsSection";
 /**
  * Landing page wireframe — structure only.
  *
- * Section order mirrors guild.ai (adjacent competitor) adapted for Nudge/Shotoku:
+ * Section order mirrors guild.ai (adjacent competitor) adapted for Cappr/Shotoku:
  * Nav → Hero → Problem → Platform → Lead magnet → Enterprise → Integrations
  * → Testimonials → Blog → Security → Final CTA → Footer
  */

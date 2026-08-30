@@ -29,7 +29,7 @@ export function FooterSection() {
           <Block label="Brand">
             <Col>
               <Text as="h3" variant="h3">
-                Nudge
+                Cappr
               </Text>
               <Text variant="caption">by Shotoku</Text>
               <Text variant="caption">Give your agents a budget, not your card.</Text>

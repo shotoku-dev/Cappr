@@ -1,4 +1,4 @@
-# PRODUCT.md — Nudge by Shotoku
+# PRODUCT.md — Cappr by Shotoku
 
 This document explains what we are building, why, and how the pieces fit together. It is written for context-loading (e.g. feeding to an LLM assistant) — not as a design spec. No visual/UI design decisions are covered here; this is functionality only.
 
@@ -6,7 +6,7 @@ This document explains what we are building, why, and how the pieces fit togethe
 
 ## 1. Origin story: why we pivoted from a component library
 
-Shotoku started as **Nudge**, a headless React component library for AI-agent spend/approval UIs. It shipped two components:
+The project started as **Nudge**, a headless React component library for AI-agent spend/approval UIs. It shipped two components:
 
 - **ApprovalQueue** — a headless component for surfacing pending agent actions to a human for approve/deny
 - **AuditTrail** — a headless component for rendering a log of agent transactions/actions
@@ -17,7 +17,7 @@ As an open-source component library, Nudge solved a UI problem (how do you rende
 - Their own policy definition system (what counts as "too much," and for which agent)
 - Their own audit/logging backend (the components could render a trail, but something had to generate one)
 
-In other words: we were building the display layer for a much bigger, unsolved backend problem. The insight was that **the real product isn't the components — it's the governance layer underneath them.** That governance layer is Shotoku. Nudge is being rebuilt as the application that sits on top of Shotoku, reusing the original components (ApprovalQueue, AuditTrail) as two of its internal screens rather than as the standalone product.
+In other words: we were building the display layer for a much bigger, unsolved backend problem. The insight was that **the real product isn't the components — it's the governance layer underneath them.** That governance layer is Shotoku. The dashboard app (now **Cappr**) is being rebuilt as the application that sits on top of Shotoku, reusing the original components (ApprovalQueue, AuditTrail) as two of its internal screens rather than as the standalone product.
 
 **The pivot in one sentence:** we went from "here are some React components you can use to build your own agent-spend UI" to "here is the full system — enforcement, policy, audit, and the UI — that gives you agent spend control out of the box."
 
@@ -45,13 +45,13 @@ An **HTTP proxy enforcement gateway**. Instead of agents opting in to calling `a
 **Compliance angle:**
 The EU AI Act (Article 50, with an enforcement deadline that passed August 2, 2026) requires transparency and documentation for certain AI systems. Shotoku's audit trail is designed to double as compliance evidence — a byproduct of normal operation rather than a separate reporting exercise.
 
-**Licensing model:** Open-core. The Shotoku SDK, proxy, and core policy engine are open-source. Nudge (the hosted/self-hosted dashboard application built on top) is the commercial product — likely tiered as a hosted cloud offering plus a self-hosted enterprise license for companies (especially in Europe) that need to keep agent financial/audit data on their own infrastructure.
+**Licensing model:** Open-core. The Shotoku SDK, proxy, and core policy engine are open-source. Cappr (the hosted/self-hosted dashboard application built on top) is the commercial product — likely tiered as a hosted cloud offering plus a self-hosted enterprise license for companies (especially in Europe) that need to keep agent financial/audit data on their own infrastructure.
 
 ---
 
-## 3. What Nudge is
+## 3. What Cappr is
 
-Nudge is the **application layer** built on top of Shotoku. If Shotoku is the meter and the enforcement gateway, Nudge is the dashboard, ledger, and policy interface a human actually uses.
+Cappr is the **application layer** built on top of Shotoku. If Shotoku is the meter and the enforcement gateway, Cappr is the dashboard, ledger, and policy interface a human actually uses.
 
 **Who it's for:** Companies and startups running multiple AI agents in production, who need visibility into what those agents are spending and a way to set/enforce limits without every policy change requiring an engineer.
 
@@ -120,6 +120,5 @@ The mechanism for actually issuing scoped spending instruments per agent (e.g. v
 
 ## 6. Open questions / not yet finalized
 
-- Exact pricing/tiering split between the open-source core, hosted Nudge, and self-hosted enterprise license.
-- Final naming: whether "Nudge" refers to the company/product suite as a whole or specifically the dashboard app (currently used both ways internally).
+- Exact pricing/tiering split between the open-source core, hosted Cappr, and self-hosted enterprise license.
 - Whether "enforcement tier" (observe/nudge/approve/block) is final terminology for the product itself, or an internal name only.

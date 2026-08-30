@@ -1,3 +1,5 @@
+import { useEffect, useRef } from "react";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import ArrowRightIcon from "../assets/icons/Arrow Right Icon.svg?react";
 import ShadowIcon from "../assets/icons/Shadow Icon.svg?react";
 import CrossIcon from "../assets/icons/Cross Icon.svg?react";
@@ -21,8 +23,27 @@ const SHADOW_ICON_SIZE = 16; // active shadow-agent pill
 /** Active shadow agent (static until agents are wired up). */
 const SHADOW_AGENT = "atlas-researcher";
 
+// Directional swap for the breadcrumb's current-module segment. `dir` is the
+// sign of (new tab index − old): +1 for a tab below (slides down), −1 for above
+// (slides up). Reduced-motion collapses it to a plain crossfade.
+type SwapCustom = { dir: number; reduce: boolean };
+const labelSwap = {
+  enter: ({ dir, reduce }: SwapCustom) => ({ y: reduce ? 0 : dir > 0 ? "-100%" : "100%", opacity: 0 }),
+  center: { y: "0%", opacity: 1 },
+  exit: ({ dir, reduce }: SwapCustom) => ({ y: reduce ? 0 : dir > 0 ? "100%" : "-100%", opacity: 0 }),
+};
+
 export function Topbar({ activeId, onNavigate }: TopbarProps) {
   const { label, Icon } = NAV_ITEMS.find((item) => item.id === activeId) ?? NAV_ITEMS[0];
+  const reduce = useReducedMotion() ?? false;
+
+  // Swap direction from the tab's position in the rail relative to the last one.
+  const activeIndex = NAV_ITEMS.findIndex((item) => item.id === activeId);
+  const prevIndexRef = useRef(activeIndex);
+  const dir = Math.sign(activeIndex - prevIndexRef.current);
+  useEffect(() => {
+    prevIndexRef.current = activeIndex;
+  }, [activeIndex]);
 
   return (
     <header
@@ -45,17 +66,30 @@ export function Topbar({ activeId, onNavigate }: TopbarProps) {
         style={{ color: "var(--color-text-disabled)" }}
       />
 
-      {/* Current module: label with its sidebar icon tucked in close. */}
-      <span
-        className="flex items-center"
-        style={{
-          gap: "var(--spacing-space-1)", // 2 — icon hugs the label
-          color: "var(--color-text-secondary)",
-        }}
-      >
-        <span style={{ fontWeight: 500 }}>{label}</span>
-        <Icon width={PAGE_ICON_SIZE} height={PAGE_ICON_SIZE} aria-hidden />
-      </span>
+      {/* Current module: label + its sidebar icon, swapped with a directional
+          vertical slide when the selected tab changes. Clipped so the outgoing
+          and incoming segments slide past behind the same window. */}
+      <div className="relative flex items-center" style={{ overflow: "hidden" }}>
+        <AnimatePresence initial={false} mode="popLayout" custom={{ dir, reduce }}>
+          <motion.span
+            key={activeId}
+            custom={{ dir, reduce }}
+            variants={labelSwap}
+            initial="enter"
+            animate="center"
+            exit="exit"
+            transition={reduce ? { duration: 0.15 } : { type: "spring", duration: 0.35, bounce: 0 }}
+            className="flex items-center"
+            style={{
+              gap: "var(--spacing-space-1)", // 2 — icon hugs the label
+              color: "var(--color-text-secondary)",
+            }}
+          >
+            <span style={{ fontWeight: 500 }}>{label}</span>
+            <Icon width={PAGE_ICON_SIZE} height={PAGE_ICON_SIZE} aria-hidden />
+          </motion.span>
+        </AnimatePresence>
+      </div>
 
       {/* Right cluster: active shadow-agent pill + command palette. */}
       <div

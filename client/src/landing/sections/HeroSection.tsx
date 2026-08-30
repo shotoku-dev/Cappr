@@ -13,7 +13,7 @@ export function HeroSection() {
             Give your agents a budget, not your card
           </Text>
           <Text variant="body">
-            Nudge is the dashboard for Shotoku — route every agent call through
+            Cappr is the dashboard for Shotoku — route every agent call through
             enforcement, set policies, approve spend, and audit everything in one
             place.
           </Text>

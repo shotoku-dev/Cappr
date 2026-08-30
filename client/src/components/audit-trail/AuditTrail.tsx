@@ -3,7 +3,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { IconArrowLoopRight } from "@tabler/icons-react";
 import CheckIcon from "../../assets/icons/CheckIcon.svg?react";
 import DenyIcon from "../../assets/icons/DenyIcon.svg?react";
-import type { AuditEntry } from "@nudge/shared";
+import type { AuditEntry } from "@cappr/shared";
 
 const COLLAPSED_HEIGHT = 44;
 const EXPANDED_PAD_Y = 24;
@@ -106,7 +106,7 @@ function AuditEntryItem({ entry, isActive, onClick, onCollapseComplete, onTamper
 
   return (
     <motion.div
-      data-nudge-item={isIdleCollapsed ? "collapsed" : "expanded"}
+      data-cappr-item={isIdleCollapsed ? "collapsed" : "expanded"}
       data-status={entry.status}
       className="relative bg-surface-app"
       style={{
@@ -342,8 +342,8 @@ export function AuditTrail({ entries, isActive = true, onTamper, canTamper }: Pr
   if (entries.length === 0) {
     return (
       <div
-        data-nudge="audit-trail"
-        data-nudge-state="empty"
+        data-cappr="audit-trail"
+        data-cappr-state="empty"
         className="flex items-center justify-center"
         style={{ width: 300, height: 120 }}
       >
@@ -353,7 +353,7 @@ export function AuditTrail({ entries, isActive = true, onTamper, canTamper }: Pr
   }
 
   return (
-    <div data-nudge="audit-trail" className="flex flex-col" style={{ gap: 8 }}>
+    <div data-cappr="audit-trail" className="flex flex-col" style={{ gap: 8 }}>
       {/* Filter */}
       <div
         className="flex bg-surface-panel"

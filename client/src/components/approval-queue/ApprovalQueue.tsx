@@ -1,7 +1,7 @@
 import { useRef, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useApprovalQueue } from "../../hooks/useApprovalQueue";
-import type { UseApprovalQueueOptions, Meter } from "@nudge/shared";
+import type { UseApprovalQueueOptions, Meter } from "@cappr/shared";
 import { QueueItemExpanded } from "./QueueItemExpanded";
 
 type Props = UseApprovalQueueOptions & { isLoading?: boolean; meter?: Meter; isActive?: boolean };
@@ -77,7 +77,7 @@ export function ApprovalQueue({
   }
 
   return (
-    <div data-nudge="approval-queue" className="w-fit flex flex-col" style={{ gap: "8px" }}>
+    <div data-cappr="approval-queue" className="w-fit flex flex-col" style={{ gap: "8px" }}>
       <AnimatePresence initial={false} mode="popLayout">
         {items.map((item) => (
           <motion.div
@@ -104,7 +104,7 @@ export function ApprovalQueue({
         ))}
       </AnimatePresence>
 
-      {items.length === 0 && <div data-nudge-state="empty" />}
+      {items.length === 0 && <div data-cappr-state="empty" />}
     </div>
   );
 }

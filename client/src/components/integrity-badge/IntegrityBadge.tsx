@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { IconShieldCheck, IconShieldX, IconLink } from "@tabler/icons-react";
-import type { AuditEntry } from "@nudge/shared";
-import { verifyChain, hashEntry, GENESIS } from "@nudge/shared";
+import type { AuditEntry } from "@cappr/shared";
+import { verifyChain, hashEntry, GENESIS } from "@cappr/shared";
 
 const PAD_X = 20;
 const COLLAPSED_HEIGHT = 44;

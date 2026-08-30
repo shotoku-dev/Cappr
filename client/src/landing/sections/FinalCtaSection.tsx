@@ -10,9 +10,9 @@ export function FinalCtaSection() {
         <Block label="Closing CTA">
           <div className="wf-stack wf-center">
             <Text as="h2" variant="h2">
-              Run. Control. Transform with Nudge.
+              Run. Control. Transform with Cappr.
             </Text>
-            <Text variant="body">See Nudge in action — start free or book a walkthrough.</Text>
+            <Text variant="body">See Cappr in action — start free or book a walkthrough.</Text>
             <div style={{ display: "flex", gap: "var(--spacing-space-4)" }}>
               <Link to="/dashboard" className="wf-btn wf-btn--primary">
                 Start free trial

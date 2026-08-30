@@ -4,7 +4,7 @@ import LoaderIcon from "../../assets/icons/LoaderIcon.svg?react";
 import CheckIcon from "../../assets/icons/CheckIcon.svg?react";
 import DenyIcon from "../../assets/icons/DenyIcon.svg?react";
 import { IconArrowLoopRight } from "@tabler/icons-react";
-import type { NudgeRequest, DecisionStatus, ValidationResult, Meter } from "@nudge/shared";
+import type { CapprRequest, DecisionStatus, ValidationResult, Meter } from "@cappr/shared";
 import { StatusOverlay } from "./StatusOverlay";
 
 // Collapsed pill height; the collapsed overlay is absolutely positioned and
@@ -14,7 +14,7 @@ const EXPANDED_PAD_Y = 24;
 const PAD_X = 20;
 
 interface Props {
-  request: NudgeRequest;
+  request: CapprRequest;
   status: DecisionStatus;
   isLoading: boolean;
   isActive: boolean;
@@ -283,17 +283,17 @@ export function QueueItemExpanded({
 
   const constraintSection = request.constraint && (
     <div
-      data-nudge-section="value-constraint"
+      data-cappr-section="value-constraint"
       className="flex flex-col mt-space-4"
       style={{ gap: "10px" }}
     >
-      <div data-nudge-field="constraint" className="flex items-center justify-between pl-space-6">
+      <div data-cappr-field="constraint" className="flex items-center justify-between pl-space-6">
         <div className="flex items-center gap-space-2">
           <IconArrowLoopRight size={14} className="text-text-muted" style={{ transform: "scaleY(-1)" }} />
           <span className="text-sm text-text-secondary">Constraint</span>
         </div>
         <span
-          data-nudge-field="constraint-label"
+          data-cappr-field="constraint-label"
           className="text-xs font-normal text-status-warning tabular-nums"
         >
           {request.constraint.label}: {request.valuePrefix}{fmt(request.constraint.limit)}
@@ -360,7 +360,7 @@ export function QueueItemExpanded({
       {/* Unified card — animates between collapsed and expanded states in place.
           No component swap: the title is always rendered, just the layout changes. */}
       <motion.div
-        data-nudge-item={isIdleCollapsed ? "collapsed" : "expanded"}
+        data-cappr-item={isIdleCollapsed ? "collapsed" : "expanded"}
         data-status={status}
         className="relative bg-surface-app w-[300px]"
         style={{
@@ -428,12 +428,12 @@ export function QueueItemExpanded({
           transition={{ duration: isCollapsing ? 0.08 : 0 }}
         >
           {/* Header */}
-          <div data-nudge-section="header" className="flex flex-col gap-space-1">
+          <div data-cappr-section="header" className="flex flex-col gap-space-1">
             <Skel
               revealed={revealed}
               skeleton={<div className="skel-bar" style={{ width: "75px", height: "16px" }} />}
             >
-              <span data-nudge-field="requester" className="text-base font-normal text-text-primary">
+              <span data-cappr-field="requester" className="text-base font-normal text-text-primary">
                 {request.requester}
               </span>
             </Skel>
@@ -442,7 +442,7 @@ export function QueueItemExpanded({
               revealed={revealed}
               skeleton={<div className="skel-bar" style={{ width: "110px", height: "10px" }} />}
             >
-              <span data-nudge-field="requested-at" className="text-[10px] text-text-secondary">
+              <span data-cappr-field="requested-at" className="text-[10px] text-text-secondary">
                 Requested {relativeTime(request.requestedAt)}
               </span>
             </Skel>
@@ -504,7 +504,7 @@ export function QueueItemExpanded({
                           onChange={(e) => handleInputChange(e.target.value)}
                           onBlur={handleEditCommit}
                           onKeyDown={(e) => e.key === "Enter" && handleEditCommit()}
-                          data-nudge-field="value"
+                          data-cappr-field="value"
                           style={{
                             gridArea: "1 / 1",
                             width: "100%",
@@ -521,7 +521,7 @@ export function QueueItemExpanded({
                       </span>
                     ) : (
                       <span
-                        data-nudge-field="value"
+                        data-cappr-field="value"
                         className="font-medium text-text-primary leading-none tabular-nums"
                         style={{ fontSize: valueFontSize, cursor: isResolved ? "default" : "text" }}
                         onClick={() => { if (!isResolved) setEditMode(true); }}
@@ -530,12 +530,12 @@ export function QueueItemExpanded({
                       </span>
                     )}
                   </div>
-                  <span data-nudge-field="summary" className="text-base font-medium text-text-secondary">
+                  <span data-cappr-field="summary" className="text-base font-medium text-text-secondary">
                     {request.summary}
                   </span>
                 </div>
                 {validationError && (
-                  <p data-nudge-field="validation-error" className="mt-space-2 text-xs text-status-danger">
+                  <p data-cappr-field="validation-error" className="mt-space-2 text-xs text-status-danger">
                     {validationError}
                   </p>
                 )}
@@ -550,7 +550,7 @@ export function QueueItemExpanded({
                 revealed={revealed}
                 skeleton={<div className="skel-bar" style={{ width: "100%", height: "14px" }} />}
               >
-                <p data-nudge-field="detail" className="text-sm font-normal text-text-secondary">
+                <p data-cappr-field="detail" className="text-sm font-normal text-text-secondary">
                   {request.detail}
                 </p>
               </Skel>
@@ -577,7 +577,7 @@ export function QueueItemExpanded({
 
           {/* Action buttons */}
           {!isResolved && !isResolving && !isSuccess && (
-            <div data-nudge-section="actions" className="mt-space-8 flex items-center gap-space-3">
+            <div data-cappr-section="actions" className="mt-space-8 flex items-center gap-space-3">
               {[
                 { action: "approve", label: "Approve", kbd: "A", onClick: onApprove },
                 { action: "modify",  label: "Modify",  kbd: "M", onClick: () => setEditMode(v => !v) },
@@ -585,7 +585,7 @@ export function QueueItemExpanded({
               ].map(({ action, label, kbd, onClick: onBtnClick }) => (
                 <motion.button
                   key={action}
-                  data-nudge-action={action}
+                  data-cappr-action={action}
                   onClick={onBtnClick}
                   className="flex items-center bg-surface-panel rounded-md cursor-pointer select-none"
                   style={{
@@ -618,7 +618,7 @@ export function QueueItemExpanded({
           {/* Resolving spinner / success check — replaces action buttons while resolving */}
           {(isResolving || isSuccess) && (
             <motion.div
-              data-nudge-section="resolving"
+              data-cappr-section="resolving"
               className="mt-space-8 flex justify-center"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}

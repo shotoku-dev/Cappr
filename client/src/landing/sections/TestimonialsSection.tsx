@@ -31,7 +31,7 @@ export function TestimonialsSection() {
           Don't just take our word for it
         </Text>
         <Text variant="body">
-          How engineering teams deploy Nudge and Shotoku across research agents,
+          How engineering teams deploy Cappr and Shotoku across research agents,
           support bots, and internal tools.
         </Text>
         <Row cols={3}>

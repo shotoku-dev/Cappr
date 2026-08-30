@@ -10,7 +10,7 @@ export function NavSection() {
         <Row cols={3}>
           <Block label="Logo">
             <Text as="span" variant="h3">
-              Nudge
+              Cappr
             </Text>
             <Text variant="caption">by Shotoku</Text>
           </Block>

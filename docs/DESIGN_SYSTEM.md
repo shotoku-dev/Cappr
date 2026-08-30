@@ -183,7 +183,7 @@ Two-digit prefix for sort order, followed by a descriptive name.
 01 — Brand Foundations
 02 — Design Tokens
 03 — Core Primitives
-04 — Nudge Components
+04 — Cappr Components
 05 — Patterns / Layouts
 06 — Product Screens
 07 — Prototype Flows
@@ -232,29 +232,29 @@ Primitive/Tooltip
 Primitive/Popover
 ```
 
-#### Nudge Components
+#### Cappr Components
 
 ```
-Nudge/ApprovalQueue
-Nudge/ApprovalQueue/Default
-Nudge/ApprovalQueue/Empty
+Cappr/ApprovalQueue
+Cappr/ApprovalQueue/Default
+Cappr/ApprovalQueue/Empty
 
-Nudge/QueueItem
-Nudge/QueueItem/Expanded
-Nudge/QueueItem/Collapsed
+Cappr/QueueItem
+Cappr/QueueItem/Expanded
+Cappr/QueueItem/Collapsed
 
-Nudge/StatusOverlay
-Nudge/StatusOverlay/Approved
-Nudge/StatusOverlay/Denied
+Cappr/StatusOverlay
+Cappr/StatusOverlay/Approved
+Cappr/StatusOverlay/Denied
 
-Nudge/ValueConstraint
-Nudge/ValueConstraint/Default
-Nudge/ValueConstraint/Edit
-Nudge/ValueConstraint/Error
+Cappr/ValueConstraint
+Cappr/ValueConstraint/Default
+Cappr/ValueConstraint/Edit
+Cappr/ValueConstraint/Error
 
-Nudge/ActionBar
-Nudge/ActionBar/Default
-Nudge/ActionBar/Resolved
+Cappr/ActionBar
+Cappr/ActionBar/Default
+Cappr/ActionBar/Resolved
 ```
 
 #### Patterns
@@ -277,8 +277,8 @@ Pattern/EmptyState/AllResolved
 **Avoid:**
 ```
 QueueItem_Expanded_Pending   ❌ underscore, not hierarchical
-nudge/queue-item/expanded    ❌ lowercase, wrong separator
-Nudge / Queue Item / Expanded  ❌ spaces around slashes
+cappr/queue-item/expanded    ❌ lowercase, wrong separator
+Cappr / Queue Item / Expanded  ❌ spaces around slashes
 QueueItemExpandedWithValuePending  ❌ flat, unreadable
 ```
 

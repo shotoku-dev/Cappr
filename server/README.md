@@ -1,6 +1,6 @@
 # server
 
-Backend for Nudge / Shotoku. **Placeholder — no code here yet.**
+Backend for Cappr / Shotoku. **Placeholder — no code here yet.**
 
 Per `docs/PRODUCT.md` the backend is **Python (FastAPI)**, a hosted service the
 desktop/web clients talk to over HTTP. The core enforcement proxy / policy

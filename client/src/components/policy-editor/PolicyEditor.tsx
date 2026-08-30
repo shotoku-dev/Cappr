@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import type { Policy, AgentPolicy, AuditEntry } from "@nudge/shared";
+import type { Policy, AgentPolicy, AuditEntry } from "@cappr/shared";
 
 const PAD_X = 20;
 const COLLAPSED_HEIGHT = 44;
@@ -341,7 +341,7 @@ export function PolicyEditor({ policy, onChange, currentSpend = 0, auditEntries 
   }, [isActive, activeAgent, policy.agents]);
 
   return (
-    <div data-nudge="policy-editor" className="flex flex-col" style={{ gap: 8 }}>
+    <div data-cappr="policy-editor" className="flex flex-col" style={{ gap: 8 }}>
       <BudgetCard
         current={currentSpend}
         limit={policy.budgetLimit}

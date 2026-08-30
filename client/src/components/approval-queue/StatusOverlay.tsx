@@ -1,4 +1,4 @@
-import type { DecisionStatus } from "@nudge/shared";
+import type { DecisionStatus } from "@cappr/shared";
 
 interface Props {
   status: DecisionStatus;
@@ -6,5 +6,5 @@ interface Props {
 
 export function StatusOverlay({ status }: Props) {
   if (status === "pending" || status === "resolving") return null;
-  return <div data-nudge-overlay="status" data-status={status} />;
+  return <div data-cappr-overlay="status" data-status={status} />;
 }

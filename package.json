@@ -1,5 +1,5 @@
 {
-  "name": "nudge",
+  "name": "cappr",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -9,10 +9,10 @@
   ],
   "scripts": {
     "predev": "node scripts/ensure-deps.mjs",
-    "dev": "npm run dev --workspace @nudge/client",
-    "build": "npm run build --workspace @nudge/client",
-    "preview": "npm run preview --workspace @nudge/client",
-    "typecheck": "npm run typecheck --workspace @nudge/shared && npm run build --workspace @nudge/client",
+    "dev": "npm run dev --workspace @cappr/client",
+    "build": "npm run build --workspace @cappr/client",
+    "preview": "npm run preview --workspace @cappr/client",
+    "typecheck": "npm run typecheck --workspace @cappr/shared && npm run build --workspace @cappr/client",
     "lint": "oxlint"
   },
   "devDependencies": {
