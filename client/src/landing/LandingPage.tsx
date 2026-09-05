@@ -1,41 +1,41 @@
 import "./landing.css";
-import { BlogSection } from "./sections/BlogSection";
-import { EnterpriseSection } from "./sections/EnterpriseSection";
-import { FinalCtaSection } from "./sections/FinalCtaSection";
-import { FooterSection } from "./sections/FooterSection";
-import { HeroSection } from "./sections/HeroSection";
-import { IntegrationsSection } from "./sections/IntegrationsSection";
-import { NavSection } from "./sections/NavSection";
-import { PlatformSection } from "./sections/PlatformSection";
-import { ProblemSection } from "./sections/ProblemSection";
-import { SecuritySection } from "./sections/SecuritySection";
-import { SpendExplorerSection } from "./sections/SpendExplorerSection";
-import { TestimonialsSection } from "./sections/TestimonialsSection";
+import { LandingBanner } from "./LandingBanner";
+import { LandingDitherField } from "./LandingDitherField";
+import { LandingHero } from "./LandingHero";
+import { LandingNav } from "./LandingNav";
+import { LandingEnforcementSection } from "./LandingEnforcementSection";
+import { LandingProcessSection } from "./LandingProcessSection";
+import { LandingSectionBand } from "./LandingSection";
+import { LandingOpenCoreSection } from "./LandingOpenCoreSection";
+import { LandingIntegrationsSection } from "./LandingIntegrationsSection";
+import { LandingFinalCta } from "./LandingFinalCta";
+import { LandingFooter } from "./LandingFooter";
 
-/**
- * Landing page wireframe — structure only.
- *
- * Section order mirrors guild.ai (adjacent competitor) adapted for Cappr/Shotoku:
- * Nav → Hero → Problem → Platform → Lead magnet → Enterprise → Integrations
- * → Testimonials → Blog → Security → Final CTA → Footer
- */
+/** Cappr marketing landing — real page at /. */
 export function LandingPage() {
   return (
-    <div className="wf-landing">
-      <NavSection />
+    <div className="landing-page min-h-dvh font-sans">
+      <header className="landing-header">
+        <LandingBanner />
+        <LandingNav />
+      </header>
       <main>
-        <HeroSection />
-        <ProblemSection />
-        <PlatformSection />
-        <SpendExplorerSection />
-        <EnterpriseSection />
-        <IntegrationsSection />
-        <TestimonialsSection />
-        <BlogSection />
-        <SecuritySection />
-        <FinalCtaSection />
+        <div className="landing-dither-sync">
+          <LandingDitherField />
+          <LandingHero />
+          <LandingSectionBand />
+        </div>
+        <LandingProcessSection />
+        <LandingEnforcementSection />
+        <LandingOpenCoreSection />
+        <LandingIntegrationsSection />
+        <div className="landing-dither-sync">
+          <LandingDitherField />
+          <LandingSectionBand />
+          <LandingFinalCta />
+        </div>
       </main>
-      <FooterSection />
+      <LandingFooter />
     </div>
   );
 }

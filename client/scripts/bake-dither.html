@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Bake landing dither</title>
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+      }
+      body {
+        background: #111;
+      }
+      #mount {
+        width: var(--w);
+        height: var(--h);
+      }
+    </style>
+  </head>
+  <body>
+    <div id="mount"></div>
+    <script type="module">
+      import {
+        ShaderMount,
+        ditheringFragmentShader,
+        DitheringShapes,
+        DitheringTypes,
+        ShaderFitOptions,
+        getShaderColorFromString,
+      } from "/node_modules/@paper-design/shaders/dist/index.js";
+
+      const params = new URLSearchParams(location.search);
+      const width = Number(params.get("w") ?? 1440);
+      const height = Number(params.get("h") ?? 960);
+      const colorBack = params.get("back") ?? "#0a0a0b";
+      const colorFront = params.get("front") ?? "#3e92cc";
+      const frame = Number(params.get("frame") ?? 0);
+
+      document.documentElement.style.setProperty("--w", `${width}px`);
+      document.documentElement.style.setProperty("--h", `${height}px`);
+
+      const mount = document.getElementById("mount");
+      const shader = new ShaderMount(
+        mount,
+        ditheringFragmentShader,
+        {
+          u_colorBack: getShaderColorFromString(colorBack),
+          u_colorFront: getShaderColorFromString(colorFront),
+          u_shape: DitheringShapes.warp,
+          u_type: DitheringTypes["4x4"],
+          u_pxSize: 2.5,
+          u_fit: ShaderFitOptions.cover,
+          u_scale: 1.1,
+          u_rotation: 0,
+          u_offsetX: -0.1,
+          u_offsetY: 0.12,
+          u_originX: 0.5,
+          u_originY: 0.5,
+          u_worldWidth: 0,
+          u_worldHeight: 0,
+        },
+        undefined,
+        0,
+        frame,
+        2,
+      );
+
+      window.__shader = shader;
+      window.__ready = false;
+
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          window.__ready = true;
+        });
+      });
+    </script>
+  </body>
+</html>

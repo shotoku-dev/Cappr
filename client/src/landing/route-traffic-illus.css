@@ -1,0 +1,105 @@
+.route-traffic-illus {
+  --route-traffic-connector-color: color-mix(in oklch, var(--color-border-default) 45%, transparent);
+  --route-traffic-pill-bg: color-mix(in oklch, var(--color-text-primary) 3%, transparent);
+  --route-traffic-pill-border: color-mix(in oklch, var(--color-border-default) 40%, transparent);
+  --route-traffic-output-border: color-mix(in oklch, var(--color-border-default) 22%, transparent);
+  --route-traffic-pill-color: var(--color-text-muted);
+
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  padding: var(--spacing-space-3);
+}
+
+.route-traffic-illus__agent-beam {
+  display: inline-flex;
+  flex-shrink: 0;
+  width: fit-content;
+  height: fit-content;
+  line-height: 0;
+}
+
+.route-traffic-illus__agent-pill {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 1px;
+  box-sizing: border-box;
+  height: 20px;
+  padding: var(--spacing-space-1) 9px var(--spacing-space-1) 5px;
+  border-radius: 20px;
+  background: var(--route-traffic-pill-bg);
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1;
+  color: var(--route-traffic-pill-color);
+}
+
+.route-traffic-illus__agent-pill svg {
+  flex-shrink: 0;
+  color: var(--color-text-muted);
+}
+
+.route-traffic-illus__agent-pill svg path {
+  stroke: currentColor;
+}
+
+.route-traffic-illus__svg {
+  flex-shrink: 0;
+  width: 100%;
+  height: auto;
+  margin-top: 2px;
+  overflow: visible;
+}
+
+.route-traffic-illus__cappr {
+  overflow: visible;
+}
+
+.route-traffic-illus__cappr-mark {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  color: var(--color-text-primary);
+}
+
+.route-traffic-illus__cappr-mark svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.route-traffic-illus__output {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  padding: 3px 6px;
+  border: 1px solid var(--route-traffic-output-border);
+  border-radius: 4px;
+  background: var(--route-traffic-pill-bg);
+  color: var(--route-traffic-pill-color);
+}
+
+.route-traffic-illus__output-label {
+  font-family: var(--font-sans);
+  font-size: 7px;
+  font-weight: 400;
+  line-height: 1;
+}
+
+.route-traffic-illus__line {
+  stroke: var(--route-traffic-connector-color);
+  stroke-width: 1px;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 1px 3px;
+  vector-effect: non-scaling-stroke;
+}
