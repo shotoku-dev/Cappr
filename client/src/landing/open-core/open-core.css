@@ -149,6 +149,10 @@
   color: var(--color-accent-500);
 }
 
+.landing-open-core-compare__mark--no {
+  color: var(--color-text-muted);
+}
+
 .landing-open-core-compare__missing {
   font-variant-numeric: tabular-nums;
   color: var(--color-text-muted);

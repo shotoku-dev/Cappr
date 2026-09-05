@@ -1,6 +1,6 @@
 import { useLayoutEffect, useRef, useState } from "react";
 import { BorderBeam } from "border-beam";
-import { IconArrowRight, IconCheck } from "@tabler/icons-react";
+import { IconArrowRight, IconCheck, IconX } from "@tabler/icons-react";
 import {
   COLUMNS,
   OPEN_CORE_COPY,
@@ -26,6 +26,14 @@ function Cell({ value }: { value: CellValue }) {
     return (
       <span className="landing-open-core-compare__missing" aria-label="Not available">
         {value.value}
+      </span>
+    );
+  }
+  if (value.kind === "cross") {
+    return (
+      <span className="landing-open-core-compare__mark landing-open-core-compare__mark--no">
+        <IconX size={18} stroke={1.75} aria-hidden />
+        <span className="landing-open-core-compare__sr">No</span>
       </span>
     );
   }
