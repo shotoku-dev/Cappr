@@ -1,0 +1,78 @@
+.set-policy-illus {
+  --set-policy-muted: var(--color-text-muted);
+  --set-policy-divider: color-mix(in oklch, var(--color-border-default) 52%, transparent);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  padding-block: var(--spacing-space-8);
+  padding-inline: var(--spacing-space-8);
+  pointer-events: none;
+  user-select: none;
+}
+
+.set-policy-illus__table {
+  width: 100%;
+}
+
+.set-policy-illus__scope {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  min-width: 0;
+  overflow: hidden;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1;
+  color: var(--set-policy-muted);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.set-policy-illus__scope svg {
+  flex-shrink: 0;
+  color: var(--color-text-muted);
+}
+
+.set-policy-illus__scope svg path {
+  stroke: currentColor;
+}
+
+.set-policy-illus__def-block + .set-policy-illus__def-block {
+  margin-top: var(--spacing-space-8);
+  padding-top: var(--spacing-space-8);
+  border-top: 1px dotted var(--set-policy-divider);
+}
+
+.set-policy-illus__def-block:not(:last-child) {
+  opacity: 0.48;
+}
+
+.set-policy-illus__def-list {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  margin-top: 10px;
+  padding-left: 18px;
+}
+
+.set-policy-illus__def-item {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  font-family: var(--font-sans);
+  font-size: 11px;
+  color: var(--set-policy-muted);
+}
+
+.set-policy-illus__def-item strong {
+  font-size: 13px;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  color: var(--set-policy-muted);
+}

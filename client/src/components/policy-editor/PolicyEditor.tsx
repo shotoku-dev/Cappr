@@ -129,11 +129,13 @@ function BudgetCard({
   current,
   limit,
   prefix,
+  width,
   onChange,
 }: {
   current: number;
   limit: number;
   prefix: string;
+  width: number | string;
   onChange: (v: number) => void;
 }) {
   const pct = Math.min(current / limit, 1);
@@ -146,7 +148,7 @@ function BudgetCard({
     <div
       className="bg-surface-app"
       style={{
-        width: 300,
+        width,
         border: "0.5px solid var(--color-border-subtle)",
         borderRadius: 16,
         overflow: "hidden",
@@ -186,6 +188,7 @@ function AgentCard({
   policy,
   prefix,
   requests,
+  width,
   isActive,
   onClick,
   onChange,
@@ -193,6 +196,7 @@ function AgentCard({
   policy: AgentPolicy;
   prefix: string;
   requests: number;
+  width: number | string;
   isActive: boolean;
   onClick: () => void;
   onChange: (updated: AgentPolicy) => void;
@@ -201,7 +205,7 @@ function AgentCard({
     <motion.div
       className="bg-surface-app relative"
       style={{
-        width: 300,
+        width,
         border: "0.5px solid var(--color-border-subtle)",
         overflow: "hidden",
         cursor: isActive ? "default" : "pointer",
@@ -313,9 +317,17 @@ interface Props {
   currentSpend?: number;
   auditEntries?: AuditEntry[];
   isActive?: boolean;
+  width?: number | string;
 }
 
-export function PolicyEditor({ policy, onChange, currentSpend = 0, auditEntries = [], isActive = true }: Props) {
+export function PolicyEditor({
+  policy,
+  onChange,
+  currentSpend = 0,
+  auditEntries = [],
+  isActive = true,
+  width = 300,
+}: Props) {
   const [activeAgent, setActiveAgent] = useState<string | null>(null);
 
   function updateAgent(index: number, updated: AgentPolicy) {
@@ -341,22 +353,24 @@ export function PolicyEditor({ policy, onChange, currentSpend = 0, auditEntries 
   }, [isActive, activeAgent, policy.agents]);
 
   return (
-    <div data-cappr="policy-editor" className="flex flex-col" style={{ gap: 8 }}>
+    <div data-cappr="policy-editor" className="flex flex-col" style={{ gap: 8, width }}>
       <BudgetCard
         current={currentSpend}
         limit={policy.budgetLimit}
         prefix={policy.budgetPrefix}
+        width={width}
         onChange={(v) => onChange({ ...policy, budgetLimit: v })}
       />
 
       {/* Dotted separator between budget and agent cards */}
-      <div style={{ borderTop: "1.5px dashed var(--color-border-subtle)", width: 300 }} />
+      <div style={{ borderTop: "1.5px dashed var(--color-border-subtle)", width }} />
 
       {policy.agents.map((agent, i) => (
         <AgentCard
           key={agent.agent}
           policy={agent}
           prefix={policy.budgetPrefix}
+          width={width}
           requests={auditEntries.filter((e) => e.request.requester === agent.agent).length}
           isActive={activeAgent === agent.agent}
           onClick={() => setActiveAgent(prev => prev === agent.agent ? null : agent.agent)}

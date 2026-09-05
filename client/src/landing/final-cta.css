@@ -1,0 +1,54 @@
+/* ── Final CTA (above the footer) ─────────────────────────── */
+
+.landing-final-cta {
+  flex-shrink: 0;
+  align-items: stretch;
+}
+
+.landing-final-cta__frame {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--spacing-space-6);
+  padding: clamp(96px, 16vh, 176px) var(--spacing-space-8);
+  background: var(--landing-surface);
+}
+
+.landing-final-cta__title {
+  margin: 0;
+  max-width: 20ch;
+  font-family: var(--font-sans);
+  font-size: clamp(28px, 4vw, 44px);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.08;
+  text-wrap: balance;
+  color: var(--color-text-primary);
+}
+
+.landing-final-cta__lead {
+  margin: 0;
+  max-width: 52ch;
+  font-family: var(--font-sans);
+  font-size: clamp(16px, 1.6vw, 18px);
+  font-weight: 400;
+  line-height: 1.55;
+  text-wrap: pretty;
+  color: var(--color-text-secondary);
+}
+
+.landing-final-cta__form {
+  margin-top: var(--spacing-space-4);
+}
+
+@media (max-width: 768px) {
+  .landing-final-cta__frame {
+    padding-inline: var(--spacing-space-6);
+    padding-block: clamp(72px, 12vh, 112px);
+  }
+
+  .landing-final-cta__title br {
+    display: none;
+  }
+}

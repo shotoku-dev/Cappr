@@ -8,8 +8,18 @@
   font-synthesis: none;
 }
 
+@font-face {
+  font-family: 'Geist Pixel Square';
+  src: url('../node_modules/geist/dist/fonts/geist-pixel/GeistPixel-Square.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  font-synthesis: none;
+}
+
 @theme {
   --font-sans: 'Geist', sans-serif;
+  --font-pixel: 'Geist Pixel Square', 'Geist', sans-serif;
 
   /* Spacing */
   --spacing-space-0: 0px;
@@ -42,9 +52,9 @@
   --color-neutral-500: oklch(0.532 0.017 285.7);
   --color-neutral-400: oklch(0.660 0.016 285.9);
   --color-neutral-300: oklch(0.773 0.013 286.0);
-  --color-accent-600: oklch(0.428 0.097 239.2);
-  --color-accent-500: oklch(0.609 0.147 243.0);
-  --color-accent-400: oklch(0.848 0.078 249.4);
+  --color-accent-600: oklch(0.520 0.095 236.5); /* darker — #2B6F9E approx */
+  --color-accent-500: oklch(0.648 0.104 236.5); /* brand — #3E92CC */
+  --color-accent-400: oklch(0.780 0.075 236.5); /* lighter — #8EC5EA approx */
   --color-red-700: oklch(0.371 0.099 25.6);
   --color-red-500: oklch(0.614 0.189 25.0);
   --color-red-300: oklch(0.833 0.093 25.7);
@@ -75,13 +85,13 @@
   --color-border-subtle: oklch(0.257 0.006 285.9);
   --color-border-default: oklch(0.303 0.009 285.8);
   --color-border-strong: oklch(0.395 0.018 285.5);
-  --color-border-focus: oklch(0.609 0.147 243.0);
+  --color-border-focus: oklch(0.648 0.104 236.5);
 
   /* Status colors */
   --color-status-warning: oklch(0.670 0.177 50.2);
   --color-status-success: oklch(0.622 0.178 145.0);
   --color-status-danger: oklch(0.614 0.189 25.0);
-  --color-status-info: oklch(0.609 0.147 243.0);
+  --color-status-info: oklch(0.648 0.104 236.5);
 }
 
 /* transitions-dev — motion tokens */
@@ -191,6 +201,9 @@
 }
 
 *, *::before, *::after { box-sizing: border-box; }
+html {
+  color-scheme: light dark;
+}
 html, body {
   margin: 0;
   background: var(--color-surface-app);
@@ -219,4 +232,20 @@ html, body {
     --color-border-default:         oklch(0.773 0.013 286.0);
     --color-border-strong:          oklch(0.660 0.016 285.9);
   }
+}
+
+/* Sonner — minimal, content-hugging */
+[data-sonner-toaster] {
+  --width: auto;
+  width: max-content !important;
+}
+
+[data-sonner-toast].landing-toast {
+  width: max-content !important;
+  min-width: 0 !important;
+  max-width: min(360px, calc(100vw - 32px)) !important;
+  padding: 10px 14px !important;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 500;
 }
