@@ -11,6 +11,7 @@
   "dependencies": {
     "@cappr/shared": "*",
     "@paper-design/shaders-react": "^0.0.80",
+    "@supabase/supabase-js": "^2.115.0",
     "@tabler/icons-react": "^3.46.0",
     "border-beam": "^1.3.0",
     "cmdk": "^1.1.1",

@@ -79,8 +79,9 @@
 
 .landing-footer__nav {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: var(--spacing-space-8);
+  grid-template-columns: repeat(2, max-content);
+  justify-content: end;
+  gap: clamp(var(--spacing-space-10), 6vw, 72px);
 }
 
 .landing-footer__col {
@@ -149,16 +150,12 @@
   justify-content: center;
   width: 32px;
   height: 32px;
-  border-radius: var(--radius-md);
   color: var(--color-text-muted);
-  transition:
-    color 150ms ease,
-    background 150ms ease;
+  transition: color 150ms ease;
 }
 
 .landing-footer__social:hover {
   color: var(--color-text-primary);
-  background: var(--color-surface-hover);
 }
 
 /* Mask renders every mark mono in currentColor, regardless of its fills */

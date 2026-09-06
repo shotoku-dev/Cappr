@@ -1,4 +1,4 @@
-import { BOOK_DEMO_HREF } from "../LandingCtas";
+import { EARLY_ACCESS_HREF } from "../LandingCtas";
 
 export const OPEN_CORE_COPY = {
   titleLine1: "Choose where Cappr runs.",
@@ -22,13 +22,13 @@ export const COLUMNS = [
     id: "hosted",
     title: "Cappr hosted",
     subtitle: "Managed control plane",
-    cta: { label: "Book a demo", href: BOOK_DEMO_HREF },
+    cta: { label: "Get early access", href: EARLY_ACCESS_HREF },
   },
   {
     id: "infra",
     title: "Cappr on your infra",
     subtitle: "Same product · your boundary",
-    cta: { label: "Talk to us about deploy", href: BOOK_DEMO_HREF },
+    cta: null,
   },
 ] as const;
 

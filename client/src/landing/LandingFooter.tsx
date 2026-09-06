@@ -6,46 +6,43 @@ import "./footer.css";
 
 const CDN = "https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons";
 
-const COLUMNS = [
+type FooterLink = {
+  label: string;
+  href?: string;
+  to?: string;
+  external?: boolean;
+};
+
+type FooterColumn = {
+  title: string;
+  links: FooterLink[];
+};
+
+const COLUMNS: FooterColumn[] = [
   {
     title: "Product",
     links: [
-      { label: "Overview", href: "#overview" },
-      { label: "Enforcement", href: "#enforcement" },
+      { label: "How it works", href: "#shadow-mode" },
+      { label: "Enforcement", href: "#enforcement-ladder" },
       { label: "Integrations", href: "#integrations" },
-      { label: "Pricing", href: "#pricing" },
-    ],
-  },
-  {
-    title: "Developers",
-    links: [
-      { label: "Documentation", href: "#docs" },
-      { label: "API reference", href: "#api" },
-      { label: "GitHub", href: "https://github.com", external: true },
-      { label: "Changelog", href: "#changelog" },
-    ],
-  },
-  {
-    title: "Company",
-    links: [
-      { label: "About", href: "#about" },
-      { label: "Contact", href: "mailto:hello@cappr.dev", external: true },
+      { label: "Open core", href: "#open-core" },
     ],
   },
   {
     title: "Legal",
     links: [
-      { label: "Privacy", href: "#privacy" },
-      { label: "Terms", href: "#terms" },
-      { label: "Security", href: "#security" },
+      { label: "Privacy", to: "/privacy" },
+      { label: "Terms", to: "/terms" },
+      { label: "Security", to: "/security" },
     ],
   },
-] as const;
+];
 
 // theSVG marks, rendered mono via CSS mask so they inherit currentColor.
 const SOCIALS = [
   { label: "X", href: "https://x.com", src: `${CDN}/x/mono.svg` },
   { label: "LinkedIn", href: "https://linkedin.com", src: `${CDN}/linkedin/default.svg` },
+  { label: "GitHub", href: "https://github.com/shotoku-dev", src: `${CDN}/github/mono.svg` },
 ] as const;
 
 export function LandingFooter() {
@@ -80,15 +77,21 @@ export function LandingFooter() {
                   <ul className="landing-footer__list">
                     {col.links.map((link) => (
                       <li key={link.label}>
-                        <a
-                          href={link.href}
-                          className="landing-footer__link"
-                          {...("external" in link && link.external
-                            ? { target: "_blank", rel: "noopener noreferrer" }
-                            : {})}
-                        >
-                          {link.label}
-                        </a>
+                        {link.to ? (
+                          <Link to={link.to} className="landing-footer__link">
+                            {link.label}
+                          </Link>
+                        ) : (
+                          <a
+                            href={link.href}
+                            className="landing-footer__link"
+                            {...(link.external
+                              ? { target: "_blank", rel: "noopener noreferrer" }
+                              : {})}
+                          >
+                            {link.label}
+                          </a>
+                        )}
                       </li>
                     ))}
                   </ul>

@@ -1,16 +1,17 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { Toaster } from "sonner";
-import { DashboardApp } from "./app/DashboardApp";
 import { LandingPage } from "./landing";
-import { SkeletonPage } from "./skeleton";
+import { PrivacyPage, SecurityPage, TermsPage } from "./legal";
 
 export default function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<LandingPage />} />
-        <Route path="/skeleton" element={<SkeletonPage />} />
-        <Route path="/dashboard/*" element={<DashboardApp />} />
+        <Route path="/privacy" element={<PrivacyPage />} />
+        <Route path="/terms" element={<TermsPage />} />
+        <Route path="/security" element={<SecurityPage />} />
+        {/* Product routes (dashboard) are disabled until launch. */}
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
       <Toaster

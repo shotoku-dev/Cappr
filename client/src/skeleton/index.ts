@@ -1,1 +1,0 @@
-export { SkeletonPage } from "./SkeletonPage";

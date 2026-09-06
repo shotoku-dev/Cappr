@@ -21,6 +21,7 @@ const ICONS = [
 export function LandingIntegrationsSection() {
   return (
     <section
+      id="integrations"
       className="landing-integrations landing-grid"
       aria-labelledby="landing-integrations-title"
     >

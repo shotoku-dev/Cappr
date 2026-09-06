@@ -2,7 +2,6 @@ import { IconArrowRight } from "@tabler/icons-react";
 import { BorderBeam } from "border-beam";
 import { useSyncExternalStore } from "react";
 
-export const BOOK_DEMO_HREF = "#book-demo";
 export const EARLY_ACCESS_HREF = "#early-access";
 
 const CTA_ARROW_SIZE = 14;
@@ -42,8 +41,8 @@ export function LandingCtas({ className }: LandingCtasProps) {
         duration={2.8}
         borderRadius={6}
       >
-        <a href={BOOK_DEMO_HREF} className="landing-cta landing-cta--primary">
-          Book a demo
+        <a href={EARLY_ACCESS_HREF} className="landing-cta landing-cta--primary">
+          Get early access
           <IconArrowRight
             size={CTA_ARROW_SIZE}
             stroke={1.75}
@@ -52,9 +51,6 @@ export function LandingCtas({ className }: LandingCtasProps) {
           />
         </a>
       </BorderBeam>
-      <a href={EARLY_ACCESS_HREF} className="landing-cta landing-cta--secondary">
-        Get early access
-      </a>
     </div>
   );
 }
