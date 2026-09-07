@@ -11,7 +11,7 @@ export function LandingFinalCta() {
       <div className="landing-grid__gutter" aria-hidden />
       <div className="landing-final-cta__frame">
         <h2 id="landing-final-cta-title" className="landing-final-cta__title">
-          Put a ceiling on agent spend
+          Put a ceiling on agent spend{" "}
           <br />
           before the next invoice.
         </h2>

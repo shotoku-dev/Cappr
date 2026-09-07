@@ -10,6 +10,8 @@
   flex-direction: column;
   align-items: flex-start;
   gap: var(--spacing-space-10);
+  /* Let the grid track shrink below the marquee's max-width (no page overflow) */
+  min-width: 0;
   padding: var(--spacing-space-10) var(--spacing-space-8);
 }
 

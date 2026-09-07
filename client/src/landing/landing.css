@@ -648,33 +648,8 @@
     padding-top: clamp(28px, 5vh, 48px);
   }
 
-  .landing-hero__layout {
-    grid-template-columns: 1fr;
-    grid-template-rows: 1fr auto;
-  }
-
-  .landing-hero__copy {
-    grid-column: 1;
-    grid-row: 1;
-    min-height: 0;
-    margin-inline-start: 0;
-  }
-
-  .landing-hero__visual {
-    position: static;
-    width: min(88vw, 380px);
-    grid-column: 1;
-    grid-row: 2;
-    justify-self: end;
-    margin-top: var(--spacing-space-4);
-  }
-
   .landing-hero__subtitle {
     max-width: 34ch;
-  }
-
-  .landing-hero__cube {
-    width: 100%;
   }
 }
 
@@ -1069,6 +1044,53 @@
 
   .landing-section__subtitle {
     max-width: 34ch;
+  }
+}
+
+/* ── Hero illustration: hold its full desktop size from wide screens down
+   to the 1000px cutoff, so the cube never scales down while it's shown.
+   Desktop's clamp(…, 40vw, 500px) would otherwise shrink it under ~1250px. */
+@media (min-width: 1001px) {
+  .landing-hero__layout {
+    grid-template-columns: minmax(0, 1fr) 500px;
+  }
+
+  .landing-hero__visual {
+    width: 500px;
+  }
+}
+
+/* ── 1000px and under: single column, illustration removed entirely. ── */
+@media (max-width: 1000px) {
+  .landing-hero {
+    height: auto;
+    max-height: none;
+  }
+
+  .landing-hero__layout {
+    grid-template-columns: 1fr;
+  }
+
+  .landing-hero__copy {
+    grid-column: 1;
+    min-height: 0;
+    margin-inline-start: 0;
+  }
+
+  .landing-hero__visual {
+    display: none;
+  }
+}
+
+/* ── Tablet only (769–1024px) — process grid eases from 3 → 2 cols ──── */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .landing-process__cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .landing-process__line {
+    white-space: normal;
+    text-wrap: pretty;
   }
 }
 
