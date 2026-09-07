@@ -1,61 +1,32 @@
-/* Legal pages — minimalist, follows OS light/dark via global tokens */
+/* Legal pages — minimalist, left-aligned prose inside the landing shell */
 
 .legal-page {
   display: flex;
   flex-direction: column;
-  min-height: 100dvh;
-  background: var(--color-surface-app);
-  color: var(--color-text-primary);
-}
-
-.legal-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--spacing-space-6);
-  padding: var(--spacing-space-6) var(--spacing-space-8);
-  border-bottom: 1px solid var(--color-border-subtle);
-}
-
-.legal-logo {
-  display: inline-flex;
-  align-items: center;
-  color: var(--color-text-primary);
-  line-height: 0;
-  text-decoration: none;
-}
-
-.legal-logo:hover {
-  opacity: 0.85;
-}
-
-.legal-logo-mark {
-  display: block;
-  width: 34px;
-  height: 34px;
-}
-
-.legal-back {
-  font-family: var(--font-sans);
-  font-size: 14px;
-  color: var(--color-text-secondary);
-  text-decoration: none;
-  transition: color 150ms ease;
-}
-
-.legal-back:hover {
-  color: var(--color-text-primary);
 }
 
 .legal-main {
   flex: 1 1 auto;
-  display: flex;
-  justify-content: center;
-  padding: clamp(var(--spacing-space-10), 6vw, 96px) var(--spacing-space-8);
+  padding-block: clamp(var(--spacing-space-10), 6vw, 96px);
 }
 
+/* Grid lives on an inner element so it isn't overridden by
+   `.landing-page main { display: flex }`, which has higher specificity. */
+.legal-grid {
+  align-content: start;
+}
+
+/* Fill the grid's center column so the side margins match the landing
+   sections exactly; the reading measure is capped on the text itself. */
 .legal-article {
   width: 100%;
+  padding-inline: var(--spacing-space-8);
+  text-align: left;
+}
+
+.legal-title,
+.legal-updated,
+.legal-prose {
   max-width: 680px;
 }
 
@@ -116,19 +87,8 @@
   text-underline-offset: 2px;
 }
 
-.legal-footer {
-  flex-shrink: 0;
-  padding: var(--spacing-space-6) var(--spacing-space-8);
-  border-top: 1px solid var(--color-border-subtle);
-  font-family: var(--font-sans);
-  font-size: 13px;
-  color: var(--color-text-muted);
-}
-
 @media (max-width: 768px) {
-  .legal-header,
-  .legal-main,
-  .legal-footer {
+  .legal-article {
     padding-inline: var(--spacing-space-6);
   }
 }

@@ -53,10 +53,43 @@
   display: block;
   width: 42px;
   height: 42px;
+  transform-origin: center;
 }
 
-.landing-footer__logo:hover {
-  opacity: 0.85;
+/* Match the navbar logo: spin on hover / focus rather than a flat fade. */
+@media (hover: hover) and (pointer: fine) {
+  .landing-footer__logo:hover .landing-footer__logo-mark {
+    animation: landing-footer-logo-spin 950ms both;
+  }
+}
+
+.landing-footer__logo:focus-visible .landing-footer__logo-mark {
+  animation: landing-footer-logo-spin 950ms both;
+}
+
+@keyframes landing-footer-logo-spin {
+  0% {
+    transform: rotate(0deg);
+    animation-timing-function: cubic-bezier(0.77, 0, 0.175, 1);
+  }
+  32% {
+    transform: rotate(-20deg);
+    animation-timing-function: linear;
+  }
+  40% {
+    transform: rotate(-20deg);
+    animation-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .landing-footer__logo:hover .landing-footer__logo-mark,
+  .landing-footer__logo:focus-visible .landing-footer__logo-mark {
+    animation: none;
+  }
 }
 
 .landing-footer__tagline {

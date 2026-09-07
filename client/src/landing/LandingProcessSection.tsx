@@ -47,7 +47,7 @@ export function LandingProcessSection() {
   }, [reduceMotion]);
 
   return (
-    <section className="landing-process landing-grid" aria-label="How Cappr works">
+    <section id="how-it-works" className="landing-process landing-grid" aria-label="How Cappr works">
       <div className="landing-grid__gutter" aria-hidden />
       <div className="landing-process__frame">
         <div className="landing-process__lines">

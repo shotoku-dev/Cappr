@@ -22,10 +22,10 @@ const COLUMNS: FooterColumn[] = [
   {
     title: "Product",
     links: [
-      { label: "How it works", href: "#shadow-mode" },
+      { label: "How it works", href: "#how-it-works" },
       { label: "Enforcement", href: "#enforcement-ladder" },
-      { label: "Integrations", href: "#integrations" },
       { label: "Open core", href: "#open-core" },
+      { label: "Integrations", href: "#integrations" },
     ],
   },
   {
