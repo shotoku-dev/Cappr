@@ -39,7 +39,7 @@ export function TermsPage() {
       <h2>Contact</h2>
       <p>
         Questions about these terms? Email{" "}
-        <a href="mailto:hello@cappr.dev">hello@cappr.dev</a>.
+        <a href="mailto:julius@shotoku.dev">julius@shotoku.dev</a>.
       </p>
     </LegalPage>
   );

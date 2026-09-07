@@ -1,17 +1,130 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="dark" style="color-scheme: dark">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#0a0a0b" />
+
+    <title>Cappr — Spend control and governance for AI agents</title>
     <meta
       name="description"
-      content="Spend control for AI agents. Cappr routes every model, tool, and payment call through one proxy — with budgets, graduated enforcement, and a real audit trail."
+      content="Cappr routes every model, tool, and payment call from your AI agents through one proxy — with budgets, graduated enforcement, and a real audit trail. Observe in shadow mode, then enforce."
     />
-    <title>Cappr</title>
+    <link rel="canonical" href="https://cappr.shotoku.dev/" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Cappr" />
+    <meta property="og:title" content="Cappr — Spend control and governance for AI agents" />
+    <meta
+      property="og:description"
+      content="One proxy in front of your AI stack: real-time budgets, graduated enforcement, and a tamper-evident audit trail so agents can't overspend or go off-policy."
+    />
+    <meta property="og:url" content="https://cappr.shotoku.dev/" />
+    <meta property="og:image" content="https://cappr.shotoku.dev/favicon.svg" />
+
+    <!-- Twitter / X -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@getcappr" />
+    <meta name="twitter:title" content="Cappr — Spend control and governance for AI agents" />
+    <meta
+      name="twitter:description"
+      content="One proxy in front of your AI stack: real-time budgets, graduated enforcement, and a tamper-evident audit trail."
+    />
+    <meta name="twitter:image" content="https://cappr.shotoku.dev/favicon.svg" />
+
+    <!-- Structured data -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "Organization",
+            "@id": "https://cappr.shotoku.dev/#organization",
+            "name": "Cappr",
+            "url": "https://cappr.shotoku.dev/",
+            "logo": "https://cappr.shotoku.dev/favicon.svg",
+            "description": "Spend control and governance for AI agents. Cappr routes every model, tool, and payment call through one proxy with budgets, graduated enforcement, and a real audit trail.",
+            "email": "julius@shotoku.dev",
+            "sameAs": [
+              "https://x.com/getcappr",
+              "https://www.linkedin.com/company/cappr-ai/"
+            ]
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://cappr.shotoku.dev/#website",
+            "url": "https://cappr.shotoku.dev/",
+            "name": "Cappr",
+            "publisher": { "@id": "https://cappr.shotoku.dev/#organization" }
+          },
+          {
+            "@type": "SoftwareApplication",
+            "name": "Cappr",
+            "applicationCategory": "DeveloperApplication",
+            "operatingSystem": "Any",
+            "url": "https://cappr.shotoku.dev/",
+            "description": "A proxy that adds budgets, graduated enforcement, and audit trails to AI agent workloads across model, tool, and payment calls.",
+            "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+          }
+        ]
+      }
+    </script>
   </head>
   <body>
     <div id="root"></div>
+
+    <!-- Content fallback for AI crawlers and no-JS clients. The interactive app
+         renders into #root above; this mirrors its key content as plain HTML. -->
+    <noscript>
+      <main>
+        <h1>Spend control and governance for AI agents</h1>
+        <p>
+          Cappr is a single proxy that sits in front of your AI stack. Point your
+          agents' model, tool, and payment calls at Cappr and it observes spend in
+          real time, enforces per-agent and per-workflow budgets, and records a
+          tamper-evident audit trail of every request. Autonomous agents are
+          powerful, but an agent that can call an API can also burn a budget, and an
+          agent that can trigger a payment can do so faster than any human can
+          review it. Cappr gives teams the guardrails to ship agents to production
+          without hoping they behave.
+        </p>
+
+        <h2>Start in shadow mode, then enforce</h2>
+        <p>
+          Enforcement is graduated. You begin in shadow mode, where Cappr watches
+          every call and reports what it would have done without blocking anything.
+          Once you trust the picture, you tighten the policy step by step: warn on
+          overspend, throttle noisy workflows, require human approval for sensitive
+          actions, and finally hard-stop calls that exceed a budget cap. Because the
+          ladder is incremental, you never flip a risky switch blind — each rung is
+          backed by the data from the rung before it.
+        </p>
+
+        <h2>One audit trail across the whole stack</h2>
+        <p>
+          Every request through Cappr is logged with the agent, the workflow, the
+          model or tool it hit, the cost, and the policy decision that applied. That
+          gives finance a real spend breakdown, gives security an evidence trail for
+          incident review, and gives engineers a way to trace exactly why a call was
+          allowed or blocked. Cappr works with providers like
+          <a href="https://openai.com/">OpenAI</a> and
+          <a href="https://www.anthropic.com/">Anthropic</a>, and aligns with
+          emerging risk guidance such as the
+          <a href="https://www.nist.gov/itl/ai-risk-management-framework">NIST AI Risk Management Framework</a>.
+        </p>
+
+        <h3>Learn more</h3>
+        <ul>
+          <li><a href="/security">How Cappr secures your data and audit trail</a></li>
+          <li><a href="/privacy">Our privacy practices</a></li>
+          <li><a href="/terms">Terms of service</a></li>
+        </ul>
+      </main>
+    </noscript>
+
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

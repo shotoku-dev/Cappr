@@ -29,7 +29,7 @@ export function SecurityPage() {
       <h2>Reporting an issue</h2>
       <p>
         If you believe you've found a security vulnerability, please email{" "}
-        <a href="mailto:security@cappr.dev">security@cappr.dev</a>. We appreciate
+        <a href="mailto:julius@shotoku.dev">julius@shotoku.dev</a>. We appreciate
         responsible disclosure and will respond as quickly as we can.
       </p>
     </LegalPage>

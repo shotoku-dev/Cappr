@@ -38,7 +38,7 @@ export function PrivacyPage() {
       <h2>Contact</h2>
       <p>
         Questions about privacy? Email{" "}
-        <a href="mailto:hello@cappr.dev">hello@cappr.dev</a>.
+        <a href="mailto:julius@shotoku.dev">julius@shotoku.dev</a>.
       </p>
     </LegalPage>
   );

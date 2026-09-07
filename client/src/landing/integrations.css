@@ -110,17 +110,6 @@
   object-fit: contain;
 }
 
-/*
-  Icons with white fills (openai, anthropic, together-ai, replicate)
-  need to be inverted in light mode so they read as black.
-  In dark mode they stay as-is (white on dark = correct).
-*/
-@media (prefers-color-scheme: light) {
-  .landing-integrations__icon--light-invert {
-    filter: invert(1);
-  }
-}
-
 /* ── Mobile ───────────────────────────────────────────────── */
 
 @media (max-width: 768px) {

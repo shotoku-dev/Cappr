@@ -1,0 +1,24 @@
+# Cappr
+
+> Cappr is spend control and governance for AI agents. It routes every model, tool, and payment call through a single proxy — adding budgets, graduated enforcement, and a real audit trail so autonomous agents can't overspend or go off-policy.
+
+Cappr sits in front of your AI stack as a drop-in proxy. Point your agents' model, tool, and payment calls at Cappr and it observes spend in real time, enforces per-agent and per-workflow budgets, and records a tamper-evident audit trail of every request. Enforcement is graduated: start in shadow mode to observe without blocking, then tighten to warn, throttle, require approval, or hard-stop as you gain confidence.
+
+## Core capabilities
+
+- [How it works](https://cappr.shotoku.dev/#shadow-mode): Start in shadow mode — observe every agent call and model spend before enforcing anything.
+- [Enforcement ladder](https://cappr.shotoku.dev/#enforcement-ladder): Graduated controls from observe, to warn, to approval-gated, to hard budget caps.
+- [Integrations](https://cappr.shotoku.dev/#integrations): Works with OpenAI, Anthropic, Google Gemini, Mistral, Groq, xAI, Stripe, and more.
+- [Open core](https://cappr.shotoku.dev/#open-core): The proxy and enforcement engine are open — self-host or run managed.
+
+## Company
+
+- [Privacy Policy](https://cappr.shotoku.dev/privacy)
+- [Terms of Service](https://cappr.shotoku.dev/terms)
+- [Security](https://cappr.shotoku.dev/security)
+
+## Contact
+
+- Email: julius@shotoku.dev
+- X: https://x.com/getcappr
+- LinkedIn: https://www.linkedin.com/company/cappr-ai/

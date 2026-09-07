@@ -39,16 +39,6 @@
   border-color: var(--color-border-default);
 }
 
-@media (prefers-color-scheme: light) {
-  .landing-waitlist__input {
-    border-color: var(--color-border-default);
-  }
-
-  .landing-waitlist__input:focus-visible {
-    border-color: var(--color-border-strong);
-  }
-}
-
 .landing-waitlist__btn {
   display: inline-flex;
   align-items: center;

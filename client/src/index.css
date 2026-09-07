@@ -202,7 +202,11 @@
 
 *, *::before, *::after { box-sizing: border-box; }
 html {
-  color-scheme: light dark;
+  color-scheme: dark;
+  scroll-behavior: smooth;
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
 }
 html, body {
   margin: 0;
@@ -210,28 +214,6 @@ html, body {
   font-family: 'Geist', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    --color-surface-app:            oklch(0.980 0.002 286.0);
-    --color-surface-panel:          oklch(0.935 0.003 286.0);
-    --color-surface-panel-elevated: oklch(0.915 0.004 285.9);
-    --color-surface-canvas:         oklch(0.940 0.003 286.0);
-    --color-surface-input:          oklch(0.935 0.003 286.0);
-    --color-surface-hover:          oklch(0.900 0.005 285.8);
-    --color-surface-active:         oklch(0.900 0.007 285.8);
-
-    --color-text-primary:           oklch(0.145 0.002 286.0);
-    --color-text-secondary:         oklch(0.303 0.009 285.8);
-    --color-text-muted:             oklch(0.532 0.017 285.7);
-    --color-text-disabled:          oklch(0.660 0.016 285.9);
-    --color-text-inverse:           oklch(0.980 0.002 286.0);
-
-    --color-border-subtle:          oklch(0.880 0.006 286.0);
-    --color-border-default:         oklch(0.773 0.013 286.0);
-    --color-border-strong:          oklch(0.660 0.016 285.9);
-  }
 }
 
 /* Sonner — minimal, content-hugging */

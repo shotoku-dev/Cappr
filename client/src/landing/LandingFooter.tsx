@@ -40,9 +40,12 @@ const COLUMNS: FooterColumn[] = [
 
 // theSVG marks, rendered mono via CSS mask so they inherit currentColor.
 const SOCIALS = [
-  { label: "X", href: "https://x.com", src: `${CDN}/x/mono.svg` },
-  { label: "LinkedIn", href: "https://linkedin.com", src: `${CDN}/linkedin/default.svg` },
-  { label: "GitHub", href: "https://github.com/shotoku-dev", src: `${CDN}/github/mono.svg` },
+  { label: "X", href: "https://x.com/getcappr", src: `${CDN}/x/mono.svg` },
+  {
+    label: "LinkedIn",
+    href: "https://www.linkedin.com/company/cappr-ai/",
+    src: `${CDN}/linkedin/default.svg`,
+  },
 ] as const;
 
 export function LandingFooter() {
